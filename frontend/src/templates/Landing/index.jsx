@@ -60,6 +60,12 @@ function Landing() {
           <button onClick={handleClickLoginBtn}>Entrar</button>
         </div>
       </header>
+
+      <main>
+        <div className="container">
+          
+        </div>
+      </main>
     </div>
   );
 }
