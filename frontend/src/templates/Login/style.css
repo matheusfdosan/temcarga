@@ -1,0 +1,28 @@
+.LoginContainer{
+    margin: auto;
+    gap: 2.0rem;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 65.0rem;
+    height: 90%;
+    max-height: 43.0rem;
+    margin: auto;
+    background-color: var(--bg);
+}
+
+.ComponentImg{
+    width: 90%;
+    height: 90%;
+}
+
+.LoginContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.LoginContent h2 {
+    font-size: 3.3rem;
+}
+

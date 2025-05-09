@@ -1,0 +1,15 @@
+.Input{
+    width: 100%;
+    height: 3.5rem;
+    border-radius: 0.7rem;
+    background-color: var(--white);
+}
+
+.Label{
+    color:var(--black-clearer);
+    margin-bottom: 0.5rem;
+}
+
+div{
+    gap: 2.0rem;
+}
