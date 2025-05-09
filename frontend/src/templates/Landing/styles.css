@@ -1,0 +1,83 @@
+#landing-page {
+  background-color: var(--bg);
+}
+
+#landing-page > header {
+  background-color: var(--white);
+  border-bottom: .1rem solid var(--gray-clearer);
+}
+
+#landing-page > header > .container {
+  width: 90%;
+  max-width: 100rem;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+#landing-page > header > .container > nav > ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+#landing-page > header > .container > nav > ul > li {
+  display: block;
+  position: relative;
+}
+
+#landing-page > header > .container > nav > ul > li > a {
+  padding: 0.5rem;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--black-clearer);
+  display: block;
+  transition: color 200ms ease;
+}
+
+#landing-page > header > .container > nav > ul > li > a:hover {
+  color: var(--primary-color);
+}
+
+.ball {
+  position: absolute;
+  left: 50%;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 100%;
+  background-color: var(--primary-color);
+  display: block;
+  margin: auto;
+  animation: ballAppers 200ms backwards;
+}
+
+#landing-page > header > .container > button {
+  padding: 1rem 2.5rem;
+  font-size: 1.6rem;
+  background-color: var(--black);
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 600;
+  color: var(--white);
+  cursor: pointer;
+  border: 0.2rem solid var(--black);
+  transition: color 200ms ease, background-color 200ms ease;
+}
+
+#landing-page > header > .container > button:hover {
+  background-color: var(--white);
+  color: var(--black);
+}
+
+@keyframes ballAppers {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
