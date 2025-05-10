@@ -1,5 +1,16 @@
 .ImgContainer{
-    width: 100vw;
-    height: 100vh;
-    background-image:url(../../assets/TrucksImages/TruckLogin.png);
+    width: 100%;
+    max-width: 80.0rem;
+    height: 100%;
+    max-height:75.0rem ;
+    margin: auto;
+}
+
+.Img2{
+    width:45.0rem ;
+    height: 60.0rem ;
+}
+
+.Img1{
+    position: absolute;
 }

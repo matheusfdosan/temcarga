@@ -1,12 +1,12 @@
 import "./style.css"
-import Logo from "../../assets/logo.svg"
-import Truck from "../../assets/TrucksImages/TruckLogin.png"
+import LogoWhite from "../../assets/LogoWhite.svg"
+import Truck from "../../assets/TrucksImages/TruckSignUp.png"
 
 function ImgContent () {
     return(
      <div className="ImgContainer">
-       <img src={Logo} alt="" />
-       <img src={Truck} alt="" />
+       <img src={LogoWhite} alt="" className="Img1" />
+       <img src={Truck} alt="" className="Img2" />
      </div> 
     )
 }

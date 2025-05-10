@@ -1,28 +1,51 @@
 .LoginContainer{
     margin: auto;
-    gap: 2.0rem;
+    justify-content: center;
+    align-items: center;
+    gap: 8.0rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 90%;
-    max-width: 65.0rem;
+    padding: 1.5rem;
+    max-width:100.0rem;
     height: 90%;
-    max-height: 43.0rem;
-    margin: auto;
     background-color: var(--bg);
 }
 
-.ComponentImg{
-    width: 90%;
-    height: 90%;
+.ImgComponent{
+    width: 100%;
 }
 
 .LoginContent{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin: auto;
+    gap: 3.0rem;
+    width: 90%;
+    height: 90%;
 }
 
 .LoginContent h2 {
-    font-size: 3.3rem;
+    font-size: 2.5rem;
 }
+
+.LoginContent > p{
+    text-align: center;
+}
+
+.FooterLogin{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 6.0rem;
+    gap: 2.0rem;
+    font-size: 1.4rem;
+}
+
+.FooterLogin a{
+   color:var( --primary-color) ;
+}
+
 
