@@ -2,9 +2,11 @@
   background-color: var(--bg);
 }
 
+/* Header */
+
 #landing-page > header {
   background-color: var(--white);
-  border-bottom: .1rem solid var(--gray-clearer);
+  border-bottom: 0.1rem solid var(--gray-clearer);
 }
 
 #landing-page > header > .container {
@@ -51,7 +53,7 @@
   background-color: var(--primary-color);
   display: block;
   margin: auto;
-  animation: ballAppers 200ms backwards;
+  animation: ballAppers 400ms backwards;
 }
 
 #landing-page > header > .container > button {
@@ -70,6 +72,281 @@
 #landing-page > header > .container > button:hover {
   background-color: var(--white);
   color: var(--black);
+}
+
+/* Hero Section*/
+
+#hero {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  padding: 10rem 0 15rem;
+  width: 90%;
+  max-width: 100rem;
+  margin: auto;
+}
+
+#hero > div:first-child > h2 {
+  font-family: var(--worksans);
+  font-size: 4rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+}
+
+#hero > div:first-child > p {
+  color: var(--black-clearer);
+  margin-bottom: 2rem;
+  width: 70%;
+}
+
+#hero > div:first-child > button {
+  padding: 1rem 2.5rem;
+  font-size: 1.6rem;
+  background-color: var(--black);
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 400;
+  color: var(--white);
+  cursor: pointer;
+  border: 0.2rem solid var(--black);
+  transition: color 200ms ease, background-color 200ms ease;
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+#hero > div:first-child > button:hover {
+  background-color: var(--bg);
+  color: var(--black);
+}
+
+#hero > div:first-child > a {
+  color: var(--primary-color);
+  font-size: 1.6rem;
+  text-decoration: none;
+  display: flex;
+  gap: 0.5rem;
+}
+
+#hero > div:nth-child(2) > img {
+  width: 80%;
+  min-width: 32rem;
+}
+
+/* I'm Truck Driver Section */
+
+#im-truck-driver {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3rem;
+  border: 0.1rem solid var(--primary-color-clearer);
+  border-radius: 1rem;
+  width: 90%;
+  background-color: var(--white);
+  box-shadow: var(--shadow-clearer);
+  max-width: 100rem;
+  margin: auto;
+}
+
+#im-truck-driver > div:first-child {
+  width: 40%;
+}
+
+#im-truck-driver > div:first-child > h3 {
+  font-size: 2.6rem;
+  font-weight: 600;
+  font-family: var(--worksans);
+  margin-bottom: 1rem;
+}
+
+#im-truck-driver > div:first-child > p {
+  font-family: var(--inter);
+  font-size: 1.6rem;
+  margin-bottom: 2rem;
+  color: var(--black-clearer);
+}
+
+#im-truck-driver > div:first-child > button {
+  padding: 1rem 2.5rem;
+  font-size: 1.4rem;
+  background-color: var(--black);
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 400;
+  color: var(--white);
+  font-size: 1.4rem;
+  cursor: pointer;
+  border: 0.2rem solid var(--black);
+  transition: color 200ms ease, background-color 200ms ease;
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+#im-truck-driver > img {
+  width: 35%;
+  min-width: 28rem;
+  box-shadow: var(--shadow);
+  border-radius: 1rem;
+}
+
+/* benefits */
+
+#benefits {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: center;
+  position: relative;
+  height: 100vh;
+  width: 90%;
+  max-width: 100rem;
+  margin: auto;
+}
+
+#benefits > div:first-child > img {
+  width: 100%;
+}
+
+#benefits > div:last-child {
+  padding: 10rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2rem;
+}
+
+#benefits > div:last-child > span {
+  font-size: 1.8rem;
+  width: 30rem;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  font-weight: 600;
+  color: var(--black-mid-clearer);
+  display: block;
+}
+
+#benefits > div:last-child > span:nth-child(1) {
+  background-color: #f5e8ba;
+  margin-right: 4rem;
+}
+#benefits > div:last-child > span:nth-child(2) {
+  background-color: #a0cdf8;
+}
+#benefits > div:last-child > span:nth-child(3) {
+  background-color: #baf8ba;
+  margin-right: 4rem;
+}
+
+/* hows it works */
+
+#hows-it-works {
+  width: 100%;
+  position: relative;
+  margin-top: 10rem;
+}
+
+#hows-it-works > .container {
+  width: 90%;
+  max-width: 100rem;
+  margin: auto;
+}
+
+#hows-it-works > img {
+  position: absolute;
+  top: -16.8rem;
+  left: 0;
+  width: 100%;
+}
+
+#hows-it-works > .container > h2 {
+  text-align: center;
+  transform: translateY(-5rem);
+}
+
+#hows-it-works > .container > p {
+  width: 60%;
+  margin: auto;
+  text-align: center;
+  transform: translateY(0rem);
+}
+
+#video-ref {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-image: url(https://images.unsplash.com/photo-1485575301924-6891ef935dcd?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-size: cover;
+  background-position: center center;
+  cursor: pointer;
+  width: 80%;
+  height: 80%;
+  border-radius: 1rem;
+}
+
+#video-border {
+  position: relative;
+  width: 80%;
+  height: 80%;
+  min-height: 44rem;
+  margin: auto;
+  padding: 5rem 8rem;
+  background-image: radial-gradient(#43599494, #39458563);
+  border-radius: 1rem;
+  margin-top: 4rem;
+}
+
+/* why the temcarga */
+
+#why-the-temcarga > .container {
+  width: 90%;
+  max-width: 100rem;
+  margin: auto;
+}
+
+#why-the-temcarga > .container > h2 {
+  padding: 0.5rem 1rem;
+  display: inline;
+  border-radius: 40rem;
+  font-size: 1.6rem;
+  font-family: var(--inter);
+  font-weight: 700;
+  color: var(--primary-color);
+  border: 0.2rem solid var(--primary-color);
+}
+
+#why-the-temcarga > .container > h3 {
+  margin: 2rem 0 5rem;
+  font-size: 2.8rem;
+  font-weight: 500;
+  width: 48%;
+}
+
+#cards-container {
+  display: flex;
+  gap: 1rem;
+}
+
+#cards-container > div:first-child {
+  padding-left: 3rem;
+}
+
+/* Faq section */
+
+#faq {
+  width: 90%;
+  max-width: 100rem;
+  margin: auto;
+  margin-bottom: 7rem;
+}
+
+#faq > img {
+  width: 60%;
+  display: block;
+  margin: auto;
+  margin-top: 8rem;
+  margin-bottom: 3rem;
 }
 
 @keyframes ballAppers {
