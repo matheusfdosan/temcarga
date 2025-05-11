@@ -12,7 +12,13 @@ function Login() {
   return (
     <div className="LoginContainer">
       <div className="ImgComponent">
-        <img src={LogoWhite} alt="logo" />
+        <img
+          src={LogoWhite}
+          alt="logo"
+          onClick={() => {
+            document.location.href = "/"
+          }}
+        />
       </div>
 
       <div className="LoginContent">

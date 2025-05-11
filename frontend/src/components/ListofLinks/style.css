@@ -13,3 +13,20 @@
   font-size: 1.4rem;
   text-decoration: none;
 }
+
+#ListofLinks a:focus {
+  outline: 0.1rem solid var(--primary-color);
+}
+
+@media (max-width: 440px) {
+  #ListofLinks {
+    columns: 2;
+    display: block;
+    text-align: center;
+  }
+
+  #ListofLinks li,
+  #ListofLinks a {
+    padding: 1rem;
+  }
+}

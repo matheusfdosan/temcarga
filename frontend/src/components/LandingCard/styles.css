@@ -1,5 +1,5 @@
 .landing-card {
-  padding: 2rem 6rem;
+  padding: 2rem 4rem;
   border-radius: 2rem;
   height: 45.9rem;
 }
@@ -13,8 +13,11 @@
 }
 
 .landing-card > span {
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
+  font-size: 1.4rem;
   font-family: var(--inter);
+  line-height: 3rem;
+
 }
 
 .landing-card > p {

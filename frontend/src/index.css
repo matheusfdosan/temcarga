@@ -29,6 +29,7 @@ html,
 body {
   font-family: var(--inter);
   height: 100vh;
+  overflow-x: hidden;
   color: var(--black);
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;

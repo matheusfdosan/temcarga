@@ -8,7 +8,14 @@ import "swiper/css/pagination"
 // import required modules
 import { Pagination } from "swiper/modules"
 
-import { useState } from "react"
+// gsap animations
+import gsap from "gsap"
+import { useGSAP } from "@gsap/react"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+gsap.registerPlugin(useGSAP)
+gsap.registerPlugin(ScrollTrigger)
+
+import { useEffect, useState, useRef, useLayoutEffect } from "react"
 import logo from "../../assets/logo.svg"
 import arrowRight from "../../assets/arrow-right.svg"
 import heroIllustration from "../../assets/hero-illustration.png"
@@ -27,21 +34,117 @@ import DisclasureWidget from "../../components/DisclasureWidget"
 import Footer from "../../components/Footer"
 
 function Landing() {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 0)
+
+  const truckRef = useRef(null)
+  const blockOneRef = useRef(null)
+  const blockTwoRef = useRef(null)
+  const blockThreeRef = useRef(null)
+
   const [hovered, setHovered] = useState("")
   const [showPlayer, setShowPlayer] = useState(false)
+  const [showMenu, setShowMenu] = useState(false)
 
   const handleHoverBall = ({ target }) => {
     const value = target.innerText
     setHovered(value)
   }
 
-  const handleHoverBallLeave = () => {
-    setHovered("")
-  }
+  useLayoutEffect(() => {
+    let ctx
 
-  const handleClickLoginBtn = () => {
-    document.location.href = "/login"
-  }
+    if (isDesktop) {
+      ctx = gsap.context(() => {
+        const truckTimeline = gsap.timeline()
+
+        truckTimeline.to(truckRef.current, {
+          scrollTrigger: {
+            trigger: truckRef.current,
+            start: "top 95%",
+            scrub: 1,
+            toggleActions: "restart pause reverse pause",
+          },
+          x: 400,
+          duration: 5,
+          ease: "power2.out",
+        })
+
+        const blocksTimeline = gsap.timeline()
+
+        blocksTimeline
+          .to(blockOneRef.current, {
+            scrollTrigger: {
+              trigger: blockOneRef.current,
+              start: "11% 71%",
+              toggleActions: "restart pause reverse pause",
+              scrub: 1,
+            },
+            x: 300,
+            y: -100,
+            rotation: 45,
+            duration: 1,
+            ease: "power2.out",
+          })
+
+          .to(blockTwoRef.current, {
+            scrollTrigger: {
+              trigger: blockTwoRef.current,
+              start: "11% 71%",
+              toggleActions: "restart pause reverse pause",
+              scrub: 1,
+            },
+            x: 350,
+            y: -150,
+            rotation: 160,
+            duration: 1,
+            ease: "power2.out",
+          })
+
+          .to(blockThreeRef.current, {
+            scrollTrigger: {
+              trigger: blockThreeRef.current,
+              start: "11% 71%",
+              toggleActions: "restart pause reverse pause",
+              scrub: 1,
+            },
+            x: 400,
+            y: 190,
+            rotation: 175,
+            duration: 1,
+            ease: "power2.out",
+          })
+      })
+    }
+
+    return () => {
+      if (ctx) ctx.revert()
+    }
+  }, [isDesktop])
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 780)
+    }
+
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (showMenu) {
+      document.documentElement.style.overflow = "hidden"
+    } else {
+      document.documentElement.style.overflow = ""
+    }
+
+    return () => {
+      document.documentElement.style.overflow = ""
+    }
+  }, [showMenu])
 
   return (
     <div id="landing-page">
@@ -53,36 +156,43 @@ function Landing() {
             <ul>
               <li
                 onMouseEnter={handleHoverBall}
-                onMouseLeave={handleHoverBallLeave}
+                onMouseLeave={() => setHovered("")}
               >
-                <a href="/">Início</a>
-                {hovered == "Início" && <div className="ball"></div>}
-              </li>
-              <li
-                onMouseEnter={handleHoverBall}
-                onMouseLeave={handleHoverBallLeave}
-              >
-                <a href="#hows-it-works">Como Trabalhamos</a>
+                <a href="#hows-it-works" onClick={() => setShowMenu(false)}>
+                  Como Trabalhamos
+                </a>
                 {hovered == "Como Trabalhamos" && <div className="ball"></div>}
               </li>
               <li
                 onMouseEnter={handleHoverBall}
-                onMouseLeave={handleHoverBallLeave}
+                onMouseLeave={() => setHovered("")}
               >
-                <a href="#why-the-temcarga">Sobre</a>
+                <a href="#why-the-temcarga" onClick={() => setShowMenu(false)}>
+                  Sobre
+                </a>
                 {hovered == "Sobre" && <div className="ball"></div>}
               </li>
               <li
                 onMouseEnter={handleHoverBall}
-                onMouseLeave={handleHoverBallLeave}
+                onMouseLeave={() => setHovered("")}
               >
-                <a href="#faq">F.A.Q</a>
+                <a href="#faq" onClick={() => setShowMenu(false)}>
+                  F.A.Q
+                </a>
                 {hovered == "F.A.Q" && <div className="ball"></div>}
               </li>
             </ul>
           </nav>
 
-          <button onClick={handleClickLoginBtn}>Entrar</button>
+          <button onClick={() => (document.location.href = "/login")}>
+            Entrar
+          </button>
+
+          <div id="burguer-menu" onClick={() => setShowMenu(!showMenu)}>
+            <div className="line"></div>
+            <div className="line"></div>
+            <div className="line"></div>
+          </div>
         </div>
       </header>
 
@@ -97,7 +207,7 @@ function Landing() {
                 apoio de um assistente virtual com IA que facilita toda a
                 comunicação e negociação.
               </p>
-              <button>Solicitar um Frete</button>
+              <button>Fazer um Orçamento</button>
               <a href="#hows-it-works">
                 Veja como Trabalhamos{" "}
                 <img src={arrowRight} alt="seta para direita" />
@@ -123,17 +233,19 @@ function Landing() {
 
           <section id="benefits">
             <div>
-              <img src={truckImg} alt="truck-img" />
+              <img src={truckImg} alt="truck-img" ref={truckRef} />
             </div>
             <div>
-              <span>
+              <span ref={blockOneRef}>
                 Fretes mais lucrativos para caminhoneiros, mais justos para
                 clientes
               </span>
-              <span>
+              <span ref={blockTwoRef}>
                 Conexão instantânea com cargas ou motoristas em poucos cliques
               </span>
-              <span>Tudo resolvido pelo WhatsApp, sem nenhuma complicação</span>
+              <span ref={blockThreeRef}>
+                Tudo resolvido pelo WhatsApp, sem nenhuma complicação
+              </span>
             </div>
           </section>
 
@@ -216,7 +328,9 @@ function Landing() {
             </div>
             <div id="cards-container">
               <Swiper
-                slidesPerView={3}
+                slidesPerView={
+                  screenWidth <= 580 ? 1 : screenWidth < 913 ? 2 : 3
+                }
                 spaceBetween={30}
                 modules={[Pagination]}
                 className="mySwiper"
@@ -305,6 +419,36 @@ function Landing() {
       </main>
 
       <Footer />
+
+      {showMenu && (
+        <div id="menu">
+          <nav>
+            <ul>
+              <li>
+                <a href="#hows-it-work" onClick={() => setShowMenu(!showMenu)}>
+                  Como Trabalhamos
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#why-the-temcarga"
+                  onClick={() => setShowMenu(!showMenu)}
+                >
+                  Sobre
+                </a>
+              </li>
+              <li>
+                <a href="#faq" onClick={() => setShowMenu(!showMenu)}>
+                  F.A.Q
+                </a>
+              </li>
+              <li>
+                <a href="/login">Entrar</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      )}
     </div>
   )
 }

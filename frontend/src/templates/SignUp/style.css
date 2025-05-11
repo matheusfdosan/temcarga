@@ -43,6 +43,7 @@
   position: absolute;
   top: 1rem;
   left: 1rem;
+  cursor: pointer;
   width: 6rem;
 }
 
@@ -99,4 +100,36 @@
 
 #login-link > a:focus {
   outline: 0.1rem solid var(--primary-color);
+}
+
+@media (max-width: 930px) {
+  .ImgComponentSignUp {
+    display: none;
+  }
+}
+
+@media (max-width: 680px) {
+  #SignUpContent > form {
+    width: 90%;
+    margin: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 55%;
+  }
+}
+
+@media (max-width: 408px) {
+  #SignUpContent > form {
+    width: 100%;
+    margin: auto;
+  }
+}
+
+@media (max-width: 370px) {
+  #password-confirm {
+    flex-direction: column;
+  }
 }

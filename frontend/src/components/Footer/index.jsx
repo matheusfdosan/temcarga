@@ -46,8 +46,7 @@ function Footer() {
       </div>
       <div>
         <div>
-
-        <span>© 2025 TemCarga. Todos os direitos reservados.</span>
+          <span>© 2025 TemCarga. Todos os direitos reservados.</span>
         </div>
       </div>
     </footer>

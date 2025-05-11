@@ -20,7 +20,7 @@ function SignUp() {
           <Input type="text" label="CPF ou CNPJ*" />
 
           <div id="password-confirm">
-            <Input type="password" label="Senha (no mínimo 8 digitos)" />
+            <Input type="password" label="Senha (mínimo 8 digitos)" />
             <Input type="password" label="Confirme a sua senha*" />
           </div>
 
@@ -38,7 +38,13 @@ function SignUp() {
         <ListofLinks />
       </div>
       <div className="ImgComponentSignUp">
-        <img src={LogoWhite} alt="logo" />
+        <img
+          src={LogoWhite}
+          alt="logo"
+          onClick={() => {
+            document.location.href = "/"
+          }}
+        />
       </div>
     </div>
   )

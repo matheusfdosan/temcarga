@@ -28,6 +28,7 @@
   position: absolute;
   top: 1rem;
   left: 1rem;
+  cursor: pointer;
   width: 6rem;
 }
 
@@ -72,4 +73,25 @@
   outline: 0.1rem solid var(--primary-color);
 }
 
+@media (max-width: 920px) {
+  .ImgComponent {
+    max-width: 35rem;
+    width: 40%;
+  }
+}
 
+@media (max-width: 750px) {
+  .ImgComponent {
+    display: none;
+  }
+
+  .LoginContent {
+    width: 70%;
+  }
+}
+
+@media (max-width: 560px) {
+  .LoginContent {
+    width: 90%;
+  }
+}

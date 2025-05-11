@@ -57,3 +57,22 @@ footer > div:last-child > div {
   margin: auto;
   color: var(--gray-clearer);
 }
+
+@media (max-width: 730px) {
+  footer > div:first-child {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, auto));
+    gap: 6rem;
+  }
+}
+
+@media (max-width: 425px) {
+  footer > div:first-child {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, auto));
+    gap: 6rem;
+    padding: 5rem 2rem;
+    width: 90%;
+    justify-content: start;
+  }
+}
