@@ -1,39 +1,94 @@
 #SignUpContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 1.5rem;
-    gap: 6.0rem;
-    width: 90%;
-    height: 50%;
-    margin: auto;
+  margin-top: 2rem;
+  margin: auto;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+  display: flex;
+  flex-direction: row;
+  padding: 3rem;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--bg);
 }
 
-#SignUpContent{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: auto;
-    height: 90%;
-    max-height: 10.0rem;
-    gap: 1.0rem;
-    width: 90%;
-    max-width: 45.0rem;
+.ImgComponentSignUp {
+  max-width: 55rem;
+  width: 70%;
+  border-radius: 1rem;
+  position: relative;
+  height: 100%;
+  background-image: url("https://images.unsplash.com/photo-1730226930383-06baa6790592?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-#SignUpContent > h2{
-    font-size: 2.3rem;
+#SignUpContainer label span {
+  font-size: 1.4rem !important;
 }
 
-#SignUpContent > p{
-    text-align: center;
+#SignUpContainer label input {
+  height: 3.5rem;
+  font-size: 1.4rem !important;
 }
 
-#FooterSignUp{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 3.0rem;
+#password-confirm {
+  display: flex;
+  gap: 2rem;
+}
+
+.ImgComponentSignUp > img:first-child {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 6rem;
+}
+
+#SignUpContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  gap: 3rem;
+}
+
+#SignUpContent > form > h2 {
+  font-size: 2.4rem;
+  margin-bottom: 3rem;
+}
+
+#SignUpContent > form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+#SignUpContent > form > button {
+  margin-top: 1rem;
+}
+
+#login-link {
+  margin-bottom: 2rem;
+  text-align: center;
+  margin-top: 1rem;
+  font-family: var(--inter);
+}
+
+#terms {
+  font-size: 1.6rem;
+  margin-top: 2rem;
+  font-family: var(--inter);
+  text-align: center;
+}
+
+#terms > a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+#login-link > a {
+  color: var(--primary-color);
+  text-decoration: none;
 }

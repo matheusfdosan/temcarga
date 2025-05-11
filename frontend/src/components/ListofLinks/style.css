@@ -1,16 +1,15 @@
-#ListofLinks{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 3.0rem;
-    list-style: none;
-    padding-left: 0;
-   
+#ListofLinks {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  list-style: none;
+  padding-left: 0;
 }
 
-#ListofLinks a{
-    color: var(--black-clearer);
-    font-size: 1.4rem;
-    text-decoration: none;
+#ListofLinks a {
+  color: var(--black-clearer);
+  font-size: 1.4rem;
+  text-decoration: none;
 }
