@@ -6,6 +6,10 @@ import ListofLinks from "../../components/ListofLinks"
 import LogoWhite from "../../assets/LogoWhite.svg"
 
 function SignUp() {
+  const handleVerifyPasswords = () => {
+    console.log("oi")
+  }
+
   return (
     <div id="SignUpContainer">
       <div id="SignUpContent">
@@ -19,13 +23,13 @@ function SignUp() {
             <Input type="password" label="Senha (no mínimo 8 digitos)" />
             <Input type="password" label="Confirme a sua senha*" />
           </div>
-          
+
           <span id="terms">
             Ao fazer o cadastro você concorda com os{" "}
             <a href="">Termos de Privacidade</a>
           </span>
 
-          <Button text="CADASTRAR" />
+          <Button text="CADASTRAR" whenIClick={handleVerifyPasswords} />
 
           <p id="login-link">
             Você já possui uma conta? <a href="login">Faça Login</a>

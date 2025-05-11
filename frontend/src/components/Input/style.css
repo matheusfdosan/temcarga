@@ -5,7 +5,7 @@
 }
 
 .form-input > span {
-    font-size: 1.6rem;
+  font-size: 1.6rem;
 }
 
 .form-input > input {
@@ -16,34 +16,46 @@
   color: var(--black-clearer);
   background: #ffffff;
   border: 1px solid rgba(35, 35, 35, 0.4);
-  border-radius: .6rem;
+  border-radius: 0.6rem;
+}
+
+.form-input > input:focus {
+  outline: 0.1rem solid var(--primary-color);
 }
 
 .input-wrapper {
-    display: flex;
-    width: 100% ;
+  display: flex;
+  width: 100%;
 }
 
 .input-wrapper > input {
-    flex: 1;
-    height: 4rem;
-    padding-left: 1rem;
-    font-size: 1.6rem;
-    font-family: var(--inter);
-    color: var(--black-clearer);
-    background: #ffffff;
-    border: .1rem solid rgba(35, 35, 35, 0.4);
-    border-right: none;
-    border-top-left-radius: .6rem;
-    border-bottom-left-radius: .6rem;
+  flex: 1;
+  height: 4rem;
+  padding-left: 1rem;
+  font-size: 1.6rem;
+  font-family: var(--inter);
+  color: var(--black-clearer);
+  background: #ffffff;
+  border: 0.1rem solid rgba(35, 35, 35, 0.4);
+  border-right: none;
+  border-top-left-radius: 0.6rem;
+  border-bottom-left-radius: 0.6rem;
+}
+
+.input-wrapper > input:focus {
+  outline: 0.1rem solid var(--primary-color);
 }
 
 .input-wrapper > button {
-    background-color: var(--white);
-    border: .1rem solid rgba(35, 35, 35, 0.4);
-    border-left: none;
-    border-top-right-radius: .6rem;
-    border-bottom-right-radius: .6rem;
-    padding-inline: 1rem;
-    cursor: pointer;
+  background-color: var(--white);
+  border: 0.1rem solid rgba(35, 35, 35, 0.4);
+  border-left: none;
+  border-top-right-radius: 0.6rem;
+  border-bottom-right-radius: 0.6rem;
+  padding-inline: 1rem;
+  cursor: pointer;
+}
+
+.input-wrapper > button:focus {
+  outline: 0.1rem solid var(--primary-color);
 }

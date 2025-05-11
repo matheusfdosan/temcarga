@@ -88,7 +88,15 @@
   text-decoration: none;
 }
 
+#terms > a:focus {
+  outline: 0.1rem solid var(--primary-color);
+}
+
 #login-link > a {
   color: var(--primary-color);
   text-decoration: none;
+}
+
+#login-link > a:focus {
+  outline: 0.1rem solid var(--primary-color);
 }

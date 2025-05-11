@@ -68,4 +68,8 @@
   text-decoration: none;
 }
 
+#register-link > a:focus {
+  outline: 0.1rem solid var(--primary-color);
+}
+
 
