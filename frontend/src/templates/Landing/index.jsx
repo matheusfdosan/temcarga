@@ -62,14 +62,14 @@ function Landing() {
                 onMouseEnter={handleHoverBall}
                 onMouseLeave={handleHoverBallLeave}
               >
-                <a href="#como-trabalhamos">Como Trabalhamos</a>
+                <a href="#hows-it-works">Como Trabalhamos</a>
                 {hovered == "Como Trabalhamos" && <div className="ball"></div>}
               </li>
               <li
                 onMouseEnter={handleHoverBall}
                 onMouseLeave={handleHoverBallLeave}
               >
-                <a href="#sobre">Sobre</a>
+                <a href="#why-the-temcarga">Sobre</a>
                 {hovered == "Sobre" && <div className="ball"></div>}
               </li>
               <li
@@ -92,15 +92,13 @@ function Landing() {
             <div>
               <h2>Contrate caminhoneiros para transportar sua carga</h2>
               <p>
-                Os clientes podem contratar um caminhoneiro para movimentar sua
-                carga de forma rápida e prática pelo nosso site, enquanto os
-                motoristas autônomos podem encontrar oportunidades de frete
-                diretamente pelo WhatsApp, onde um assistente virtual com
-                inteligência artificial facilita toda a comunicação, envio de
-                dados, negociação e confirmação do serviço.
+                Clientes contratam caminhoneiros pelo site de forma rápida,
+                enquanto motoristas autônomos encontram fretes via WhatsApp com
+                apoio de um assistente virtual com IA que facilita toda a
+                comunicação e negociação.
               </p>
               <button>Solicitar um Frete</button>
-              <a href="/solicitar-frete">
+              <a href="#hows-it-works">
                 Veja como Trabalhamos{" "}
                 <img src={arrowRight} alt="seta para direita" />
               </a>
@@ -291,15 +289,21 @@ function Landing() {
             <img src={faqTitle} alt="faq titulo" />
 
             <div className="faqs-container">
-              <DisclasureWidget title={"Como é feito o pagamento?"} text={"a"} />
+              <DisclasureWidget
+                title={"Como é feito o pagamento?"}
+                text={"a"}
+              />
               <DisclasureWidget title={"Preciso emitir nota?"} text={"a"} />
-              <DisclasureWidget title={"Como o caminhoneiro é selecionado?"} text={"a"} />
+              <DisclasureWidget
+                title={"Como o caminhoneiro é selecionado?"}
+                text={"a"}
+              />
               <DisclasureWidget title={"Como funciona o suporte?"} text={"a"} />
             </div>
           </section>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   )
