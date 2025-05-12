@@ -1,0 +1,62 @@
+.form-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-input > span {
+  font-size: 1.6rem;
+}
+
+.form-input > input {
+  height: 4rem;
+  padding-left: 1rem;
+  font-size: 1.6rem;
+  font-family: var(--inter);
+  color: var(--black-clearer);
+  background: #ffffff;
+  border: 1px solid rgba(35, 35, 35, 0.4);
+  border-radius: 0.6rem;
+}
+
+.form-input > input:focus {
+  outline: 0.1rem solid var(--primary-color);
+}
+
+.input-wrapper {
+  display: flex;
+}
+
+.input-wrapper > input {
+  flex: 1;
+  width: 100%
+  ;min-width: 10rem;
+  height: 4rem;
+  padding-left: 1rem;
+  font-size: 1.6rem;
+  font-family: var(--inter);
+  color: var(--black-clearer);
+  background: #ffffff;
+  border: 0.1rem solid rgba(35, 35, 35, 0.4);
+  border-right: none;
+  border-top-left-radius: 0.6rem;
+  border-bottom-left-radius: 0.6rem;
+}
+
+.input-wrapper > input:focus {
+  outline: 0.1rem solid var(--primary-color);
+}
+
+.input-wrapper > button {
+  background-color: var(--white);
+  border: 0.1rem solid rgba(35, 35, 35, 0.4);
+  border-left: none;
+  border-top-right-radius: 0.6rem;
+  border-bottom-right-radius: 0.6rem;
+  padding-inline: 1rem;
+  cursor: pointer;
+}
+
+.input-wrapper > button:focus {
+  outline: 0.1rem solid var(--primary-color);
+}

@@ -1,0 +1,135 @@
+#SignUpContainer {
+  margin-top: 2rem;
+  margin: auto;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+  display: flex;
+  flex-direction: row;
+  padding: 3rem;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--bg);
+}
+
+.ImgComponentSignUp {
+  max-width: 55rem;
+  width: 70%;
+  border-radius: 1rem;
+  position: relative;
+  height: 100%;
+  background-image: url("https://images.unsplash.com/photo-1730226930383-06baa6790592?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#SignUpContainer label span {
+  font-size: 1.4rem !important;
+}
+
+#SignUpContainer label input {
+  height: 3.5rem;
+  font-size: 1.4rem !important;
+}
+
+#password-confirm {
+  display: flex;
+  gap: 2rem;
+}
+
+.ImgComponentSignUp > img:first-child {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  cursor: pointer;
+  width: 6rem;
+}
+
+#SignUpContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  gap: 3rem;
+}
+
+#SignUpContent > form > h2 {
+  font-size: 2.4rem;
+  margin-bottom: 3rem;
+}
+
+#SignUpContent > form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+#SignUpContent > form > button {
+  margin-top: 1rem;
+}
+
+#login-link {
+  margin-bottom: 2rem;
+  text-align: center;
+  margin-top: 1rem;
+  font-family: var(--inter);
+}
+
+#terms {
+  font-size: 1.6rem;
+  margin-top: 2rem;
+  font-family: var(--inter);
+  text-align: center;
+}
+
+#terms > a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+#terms > a:focus {
+  outline: 0.1rem solid var(--primary-color);
+}
+
+#login-link > a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+#login-link > a:focus {
+  outline: 0.1rem solid var(--primary-color);
+}
+
+@media (max-width: 930px) {
+  .ImgComponentSignUp {
+    display: none;
+  }
+}
+
+@media (max-width: 680px) {
+  #SignUpContent > form {
+    width: 90%;
+    margin: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 55%;
+  }
+}
+
+@media (max-width: 408px) {
+  #SignUpContent > form {
+    width: 100%;
+    margin: auto;
+  }
+}
+
+@media (max-width: 370px) {
+  #password-confirm {
+    flex-direction: column;
+  }
+}
