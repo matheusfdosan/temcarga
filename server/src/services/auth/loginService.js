@@ -1,5 +1,5 @@
-const findByEmail = require("../../repositories/findByEmail.js")
-const comparePasswords = require("../../repositories/comparePasswords.js")
+const findByEmail = require("../../repositories/findByEmail")
+const comparePasswords = require("../../repositories/comparePasswords")
 
 const loginService = async (email, password) => {
   const user = await findByEmail(email)
@@ -7,7 +7,14 @@ const loginService = async (email, password) => {
 
   const isValid = await comparePasswords(password, user.password)
   if (!isValid) throw new Error("Senha incorreta")
-  return user
+
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    cpf_cnpj: user.cpf_cnpj,
+    phone: user.phone,
+  }
 }
 
 module.exports = loginService

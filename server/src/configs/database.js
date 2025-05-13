@@ -1,20 +1,12 @@
-const mongoose = require("mongoose")
-const { MONGODB_URI } = require("../../envVariables.js")
-const fastifyPlugin = require("fastify-plugin")
+const postgres = require("postgres")
+const {
+  PGHOST,
+  PGDATABASE,
+  PGUSER,
+  PGPASSWORD,
+} = require("../../envVariables.js")
 
-// Conexão com o Mongo
-const connectDB = async () => {
-  try {
-    if (!MONGODB_URI) throw new Error("MongoDB não está definido em .env")
+const URL = `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}?sslmode=require`
+const sql = postgres(URL)
 
-    await mongoose.connect(MONGODB_URI, {
-      useNewURLParser: true,
-      useUnifiedTopology: true,
-    })
-    console.log("MongoDB Conectado Baby ;)")
-  } catch (err) {
-    console.error("Erro ao se conectar com o MongoDB: " + err)
-  }
-}
-
-module.exports = fastifyPlugin(connectDB)
+module.exports = sql

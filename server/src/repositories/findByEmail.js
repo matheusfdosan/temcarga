@@ -1,7 +1,10 @@
-const User = require("../models/User.js")
+const sql = require("../configs/database.js")
 
 const findByEmail = async (email) => {
-  return await User.findOne({ email })
+  const [user] = await sql`
+    SELECT * FROM client WHERE email = ${email}
+  `
+  return user || null
 }
 
 module.exports = findByEmail

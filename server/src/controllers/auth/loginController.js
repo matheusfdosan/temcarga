@@ -7,13 +7,15 @@ const loginController = async (request, reply) => {
   try {
     const user = await loginService(email, password)
     const token = request.server.jwt.sign(
-      { id: user._id, email: user.email },
+      { id: user.id, email: user.email },
       secret,
       { expiresIn }
     )
     reply.send({ acess: true, token })
   } catch (err) {
-    reply.status(401).send({ acess: false, error: "Erro ao fazer cadastro: " + err })
+    reply
+      .status(401)
+      .send({ acess: false, error: "Erro ao fazer cadastro: " + err })
   }
 }
 
