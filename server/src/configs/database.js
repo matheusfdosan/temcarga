@@ -1,13 +1,20 @@
 const mongoose = require("mongoose")
-const { MONGODB } = process.env
+const { MONGODB_URI } = require("../../envVariables.js")
+const fastifyPlugin = require("fastify-plugin")
 
 // Conexão com o Mongo
 const connectDB = async () => {
-  await mongoose.connect(MONGODB, {
-    useNewURLParser: true,
-    useUnifiedTopology: true,
-  })
-  console.log("Mongoose Connected Baby ;)")
+  try {
+    if (!MONGODB_URI) throw new Error("MongoDB não está definido em .env")
+
+    await mongoose.connect(MONGODB_URI, {
+      useNewURLParser: true,
+      useUnifiedTopology: true,
+    })
+    console.log("MongoDB Conectado Baby ;)")
+  } catch (err) {
+    console.error("Erro ao se conectar com o MongoDB: " + err)
+  }
 }
 
-module.exports = connectDB
+module.exports = fastifyPlugin(connectDB)

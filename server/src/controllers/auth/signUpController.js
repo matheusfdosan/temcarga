@@ -1,8 +1,13 @@
-import deleteUserService from "../services/deleteUserService.js"
+const signUpService = require("../../services/auth/signUpService.js")
 
-export default async (req, res) => {
-  const clientCPF = req.params.id
-
-  const response = await deleteUserService(clientCPF)
-  return response
+const signUpController = async (request, reply) => {
+  const { name, cpf_cnpj, email, password } = request.body
+  try {
+    const user = await signUpService(name, cpf_cnpj, email, password)
+    reply.status(201).send({ message: "Usuário registrado", user })
+  } catch (err) {
+    reply.status(401).send({ error: "Erro ao fazer cadastro: " + err})
+  }
 }
+
+module.exports = signUpController
