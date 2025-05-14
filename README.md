@@ -8,10 +8,14 @@ Já param para pensar como os produtos que vocês compram no mercado ou na inter
 
 ## Como funciona?
 
-Tudo começa quando o cliente acessa nossa plataforma web, onde ele pode solicitar um frete
+Tudo começa quando o cliente acessa nossa plataforma web, onde ele pode solicitar um frete, informando origem, destino, tipo da carga, peso, etc. Após o cliente informar sobre o serviço, ele recebe um orçamento instantâneo (com base na Tabela Mínima da ANTT) e enviar o solicitação no sistema para algum caminhoneiro aceitar.
+
+Quanto ao caminhoneiro, ele terá que adicionar no celular dele o nosso número ao WhatsApp, fazer um cadastro e ver os serviços disponíveis, onde ele pode escolher o serviço e realizá-lo. Ao longo do serviço, tanto o caminhoneiro quanto o cliente recebem os documentos via PDF para manter dentro da lei.
+
+Para o desenvolvimento da plataforma utilizamos 
 
 
-##
+
 ---
 
 
@@ -19,24 +23,7 @@ Aqui está um roteiro em **3 partes**, pensado para **3 apresentadores**, com um
 
 ---
 
-## 📌 Parte 1 – Contexto e Problema (Apresentador 1)
 
-1. **Abertura e contexto do setor**
-
-   * “O transporte rodoviário de cargas no Brasil é 60% conduzido por autônomos, mas sofre com falta de transparência, rastreamento precário e preços abaixo do mínimo (CNT).”
-   * “Isso gera atrasos, insegurança no recebimento do valor justo e dificuldade para pequenas empresas planejarem suas entregas.”
-
-2. **Problema de mobilidade**
-
-   * “Imagine um comerciante de materiais de construção em SP que não sabe quando a carga chega...”
-   * “Ou um caminhoneiro que aceita fretes sem saber o valor real, e fica sem rota otimizada.”
-
-3. **Missão e Objetivo do *TemCarga***
-
-   * “Missão: conectar clientes e caminhoneiros de forma justa e tecnológica.”
-   * “Objetivo piloto: em 6 meses, operar SP-RJ com 100 fretes/mês.”
-
----
 
 ## 📌 Parte 2 – Solução e Funcionamento (Apresentador 2)
 
