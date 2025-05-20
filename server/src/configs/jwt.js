@@ -8,6 +8,16 @@ async function jwtFunc(server) {
     secret: JWT_SECRET,
     expiresIn: "1h",
   })
+
+  server.decorate("authenticate", async function (request, reply) {
+    try {
+      await request.jwtVerify()
+    } catch (err) {
+      reply.send(err)
+    }
+  })
 }
+
+
 
 module.exports = fastifyPlugin(jwtFunc)

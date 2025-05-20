@@ -1,6 +1,7 @@
-const protectedRouteController = async (req, res) => {
-  const user = req.user
-  res.json({ message: "Rota protegida acessada", user })
+const protectedRouteController = async (request, reply) => {
+  const user = request.user
+
+  reply.send({ message: "Rota protegida acessada", user })
 }
 
 module.exports = protectedRouteController
