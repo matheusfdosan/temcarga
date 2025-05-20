@@ -1,0 +1,89 @@
+header {
+  width: 100%;
+  background-color: var(--white);
+  border-bottom: 0.1rem solid var(--border-clearer);
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#header-container {
+  width: 97%;
+
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#header-container > a > img {
+  width: 13rem;
+}
+
+#header-container > label {
+  display: flex;
+  height: 3.2rem;
+  width: 35rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  gap: 1rem;
+  align-items: center;
+  border: 0.1rem solid var(--border-clearer);
+}
+
+#header-container > label > img {
+  width: 2rem;
+  height: 2rem;
+  margin-left: 0.5rem;
+}
+
+#header-container > label > input {
+  flex: 1;
+  font-size: 1.4rem;
+  border: none;
+  font-family: var(--inter);
+}
+
+#header-container > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+#header-container > div > a,
+#header-container > div > a > img {
+  width: 2rem;
+  height: 2rem;
+}
+
+#header-container > div > #vertical-line {
+  width: 0.2rem;
+  height: 3.8rem;
+  background-color: var(--gray-clearer);
+  border-radius: 1rem;
+}
+
+#user-place {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+#user-place > img {
+  width: 3.2rem;
+  border-radius: 10rem;
+  box-shadow: 0 0 0 0.5rem var(--primary-color);
+}
+
+#user-place > div > h2 {
+  font-size: 1.6rem;
+  color: var(--black);
+  font-weight: 600;
+}
+
+#user-place > div > p {
+  color: var(--black-mid-clearer);
+  font-size: 1.4rem;
+}
