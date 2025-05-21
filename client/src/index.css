@@ -10,17 +10,21 @@
   --bg: #f9f9f9;
   --white: #ffff;
   --black: #232323;
-  --border-clearer: #A3A3A3;
+  --border-clearer: #a3a3a3;
+  --other-black: #575757;
+  --other-black-clearer: #57575799;
   --black-mid-clearer: #5c5b5c;
   --black-clearer: #636363;
   --primary-color: #3196f8;
-  --primary-color-more-clearer: #DDECFB;
+  --primary-color-more-clearer: #ddecfb;
   --primary-color-clearer: #83bffa;
+  --border-blue: #3196f83d;
   --gray-clearer: #e4e4e4;
+  --bg-footer-request-card: #f0f0f054;
   --worksans: "Work Sans", sans-serif;
   --inter: "Inter", sans-serif;
-  --shadow: .9rem .8rem 2.3rem #00000040;
-  --shadow-clearer: .9rem .8rem 2.3rem #0000000c;
+  --shadow: 0.9rem 0.8rem 2.3rem #00000040;
+  --shadow-clearer: 0.9rem 0.8rem 2.3rem #0000000c;
 }
 
 html {
