@@ -1,0 +1,162 @@
+.request-card {
+  background-color: var(--white);
+  border: 0.15rem solid var(--border-blue);
+  border-radius: 1rem;
+}
+
+.request-card > .container {
+  padding: 2rem;
+}
+
+.request-card > .container > .status {
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  gap: 0.5rem;
+  border-radius: 10rem;
+  margin-bottom: 3rem;
+}
+
+.request-card > .container > .status.pending {
+  background-color: #ffc26138;
+  color: #e28b00;
+}
+
+.request-card > .container > .status.in-progress {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.request-card > .container > .status.completed {
+  background-color: #3b82f62b;
+  color: #3196f8;
+}
+
+.request-card > .container > .status.canceled {
+  background-color: #ff616138;
+  color: #ef4444;
+}
+
+#origin-destination {
+  display: flex;
+  gap: 4rem;
+  margin-bottom: 3rem;
+}
+
+#origin-destination > div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#type {
+  margin-bottom: 3rem;
+}
+
+#type > h3,
+#value > h3 {
+  font-family: var(--inter);
+  color: var(--other-black);
+  font-weight: 500;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+#type > span {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-transform: capitalize;
+  font-weight: 500;
+  color: var(--black);
+}
+
+#value > span {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+#origin-destination > div > div > h4 {
+  font-family: var(--inter);
+  margin-bottom: 0.5rem;
+  color: var(--black);
+  font-size: 1.8rem;
+}
+
+#origin-destination > div > div > p {
+  font-family: var(--inter);
+  font-size: 1.6rem;
+  color: var(--black-mid-clearer);
+}
+
+#line {
+  width: 100%;
+  height: 0.2rem;
+  background-color: var(--gray-clearer);
+  margin: 2rem 0;
+}
+
+#driver {
+  display: flex;
+  gap: 1rem;
+}
+
+#driver > img {
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+  border-radius: 10rem;
+}
+
+#driver > div > p {
+  font-weight: 600;
+  font-size: 1.8;
+}
+
+#driver > div > span {
+  font-size: 1.6rem;
+  color: var(--other-black);
+  font-weight: 500;
+}
+
+#card-footer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 2rem;
+  background-color: var(--bg-footer-request-card);
+}
+
+#card-footer > button:first-child {
+  background-color: var(--gray-clearer);
+  padding: 1rem;
+  border: none;
+  border-radius: .5rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: background-color 200ms ease;
+}
+
+#card-footer > button:first-child:hover {
+  background-color: var(--other-black-clearer);
+}
+
+#card-footer > button:last-child {
+  color: var(--white);
+  background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: .5rem;
+  border: none;
+  font-size: 1.6rem;
+  transition: background-color 200ms ease;
+  cursor: pointer;
+}
+
+#card-footer > button:last-child:hover {
+  background-color: var(--primary-color-clearer);
+}
