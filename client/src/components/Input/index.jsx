@@ -1,22 +1,22 @@
-import "./style.css"
-import eyeOffImg from "../../assets/eye-off.svg"
-import eyeOnImg from "../../assets/eye-on.svg"
-import { useState } from "react"
-import { IMaskInput } from "react-imask"
+import "./style.css";
+import eyeOffImg from "../../assets/eye-off.svg";
+import eyeOnImg from "../../assets/eye-on.svg";
+import { useState } from "react";
+import { IMaskInput } from "react-imask";
 
-function Input({ type, label }) {
-  const [showPassword, setShowPassword] = useState(false)
-  const [inputValue, setInputValue] = useState("")
+function Input({ type = "text", label }) {
+  const [showPassword, setShowPassword] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = ({ target }) => {
-    setInputValue(target.value)
-  }
+    setInputValue(target.value);
+  };
 
-  const inputId = label.replace(/\s+/g, "-").toLowerCase()
+  const inputId = label.replace(/\s+/g, "-").toLowerCase();
 
   const handleAccept = (value, mask) => {
-    setCpfCnpj(value)
-  }
+    setCpfCnpj(value);
+  };
 
   return (
     <>
@@ -46,21 +46,25 @@ function Input({ type, label }) {
             </button>
           </div>
         </label>
+      ) : label === "CEP" ? (
+        <label className="form-input" htmlFor={inputId}>
+          <span>{label}</span>
+          <IMaskInput
+            mask={[{ mask: "00.000-00" }]}
+            overwrite={true}
+            required
+          />
+        </label>
       ) : label == "CPF ou CNPJ*" ? (
-        <>
-          <label className="form-input" htmlFor={inputId}>
-            <span>{label}</span>
-            <IMaskInput
-              mask={[
-                { mask: "000.000.000-00" },
-                { mask: "00.000.000/0000-00" },
-              ]}
-              onAccept={handleAccept}
-              overwrite={true}
-              required
-            />
-          </label>
-        </>
+        <label className="form-input" htmlFor={inputId}>
+          <span>{label}</span>
+          <IMaskInput
+            mask={[{ mask: "000.000.000-00" }, { mask: "00.000.000/0000-00" }]}
+            onAccept={handleAccept}
+            overwrite={true}
+            required
+          />
+        </label>
       ) : (
         <label className="form-input" htmlFor={inputId}>
           <span>{label}</span>
@@ -74,7 +78,7 @@ function Input({ type, label }) {
         </label>
       )}
     </>
-  )
+  );
 }
 
-export default Input
+export default Input;

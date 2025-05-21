@@ -7,6 +7,7 @@ import LateralBar from "../../components/LateralBar"
 
 import Home from "../../components/Home"
 import YourRequests from "../../components/YourRequests"
+import NewRequest from "../../components/NewRequest"
 
 function HomePage() {
   const { active } = useNavigation()
@@ -18,7 +19,7 @@ function HomePage() {
         <LateralBar />
         {active == "home" && <Home />}
         {active === "your-requests" && <YourRequests />}
-        {active === "new-request" && "oi"}
+        {active === "new-request" && <NewRequest />}
         {active === "documents" && "oi"}
         {active === "support" && "oi"}
         {active === "settings" && "oi"}
