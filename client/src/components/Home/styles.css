@@ -1,0 +1,84 @@
+#home {
+  flex: 1;
+  height: 90vh;
+  overflow-y: scroll;
+  background-color: var(--bg);
+  padding: 3rem;
+}
+
+#home > h2 {
+  font-family: var(--inter);
+  font-weight: 500;
+  color: var(--other-black);
+  margin-bottom: 1rem;
+}
+
+#home > p {
+  font-family: var(--inter);
+  color: var(--other-black-clearer);
+  font-weight: 500;
+  margin-bottom: 3rem;
+}
+
+#home-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(23.7rem, auto));
+  width: 100%;
+  gap: 2rem;
+}
+
+.card {
+  background-color: var(--white);
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 1rem;
+  gap: 2rem;
+}
+
+.card > .main-info > h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: var(--other-black);
+  font-weight: 400;
+}
+
+.card > .main-info > span {
+  font-size: 2rem;
+  color: var(--other-black);
+  font-weight: 600;
+}
+
+.card > img {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.card:hover {
+  cursor: pointer;
+  transition: box-shadow 200ms ease;
+}
+
+.card:nth-child(1):hover {
+  box-shadow: inset 0.3rem 0 0 #3196f8;
+}
+
+.card:nth-child(2):hover {
+  box-shadow: inset 0.3rem 0 0 #22c55e;
+}
+
+.card:nth-child(3):hover {
+  box-shadow: inset 0.3rem 0 0 #a855f7;
+}
+
+.card:nth-child(4):hover {
+  box-shadow: inset 0.3rem 0 0 #eab308;
+}
+
+#home > h3 {
+  margin: 4rem 0 2rem;
+  font-weight: 600;
+  color: var(--black-clearer);
+
+}
