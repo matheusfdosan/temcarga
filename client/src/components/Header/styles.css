@@ -10,7 +10,6 @@ header {
 
 #header-container {
   width: 97%;
-
   margin: auto;
   display: flex;
   justify-content: space-between;
@@ -18,7 +17,7 @@ header {
 }
 
 #header-container > a > img {
-  width: 13rem;
+  width: 10rem;
 }
 
 #header-container > label {
