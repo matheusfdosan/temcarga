@@ -1,8 +1,7 @@
 #lateral-bar {
   padding: 2rem;
   border-right: 0.1rem solid var(--border-clearer);
-  width: fit-content;
-  min-width: 24.5rem;
+  width: 26rem;
   height: 90vh;
   display: flex;
   flex-direction: column;
@@ -25,13 +24,18 @@
   color: var(--black-mid-clearer);
   font-weight: 600;
   font-family: var(--inter);
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   padding: 1rem;
+  cursor: pointer;
+}
+
+#lateral-bar ul > li {
+  transition: background-color 200ms ease;
+  border-radius: 0.5rem;
 }
 
 #lateral-bar ul > li:hover {
   background-color: var(--primary-color-more-clearer);
-  border-radius: .5rem;
 }
 
 #lateral-bar ul:last-child > li > a {
@@ -40,8 +44,8 @@
 }
 
 #lateral-bar ul:first-child > li > a > img {
-  width: 2rem;
-  height: 2rem;
+  width: 1.8rem;
+  height: 1.8rem;
 }
 
 #lateral-bar-line {
