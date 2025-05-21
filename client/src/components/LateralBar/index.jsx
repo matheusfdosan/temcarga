@@ -1,34 +1,41 @@
-import React from "react"
-import "./styles.css"
+import React, { useEffect } from "react";
+import "./styles.css";
 
-import homeIcon from "../../assets/LateralBarIcons/home-outlined.svg"
-import requestIcon from "../../assets/LateralBarIcons/requests-outlined.svg"
-import newRequestIcon from "../../assets/LateralBarIcons/new-request-outlined.svg"
-import documentsIcon from "../../assets/LateralBarIcons/documents-outlined.svg"
-import supportIcon from "../../assets/LateralBarIcons/support-outlined.svg"
-import configsIcon from "../../assets/LateralBarIcons/configs-outlined.svg"
-import howWorksIcon from "../../assets/LateralBarIcons/how-works-outlined.svg"
-import aboutIcon from "../../assets/LateralBarIcons/about-outlined.svg"
-import arrowIcon from "../../assets/LateralBarIcons/inclined-arrow-normal.svg"
+import homeIcon from "../../assets/LateralBarIcons/home-outlined.svg";
+import requestIcon from "../../assets/LateralBarIcons/requests-outlined.svg";
+import newRequestIcon from "../../assets/LateralBarIcons/new-request-outlined.svg";
+import documentsIcon from "../../assets/LateralBarIcons/documents-outlined.svg";
+import supportIcon from "../../assets/LateralBarIcons/support-outlined.svg";
+import configsIcon from "../../assets/LateralBarIcons/configs-outlined.svg";
+import howWorksIcon from "../../assets/LateralBarIcons/how-works-outlined.svg";
+import aboutIcon from "../../assets/LateralBarIcons/about-outlined.svg";
+import arrowIcon from "../../assets/LateralBarIcons/inclined-arrow-normal.svg";
 
-import homeIconActive from "../../assets/LateralBarIcons/home-filled.svg"
-import requestIconActive from "../../assets/LateralBarIcons/requests-filled.svg"
-import newRequestIconActive from "../../assets/LateralBarIcons/new-request-filled.svg"
-import documentsIconActive from "../../assets/LateralBarIcons/documents-filled.svg"
-import supportIconActive from "../../assets/LateralBarIcons/support-filled.svg"
-import configsIconActive from "../../assets/LateralBarIcons/configs-filled.svg"
-import howWorksIconActive from "../../assets/LateralBarIcons/how-works-filled.svg"
-import aboutIconActive from "../../assets/LateralBarIcons/about-filled.svg"
-import arrowIconActive from "../../assets/LateralBarIcons/inclined-arrow-blue.svg"
+import homeIconActive from "../../assets/LateralBarIcons/home-filled.svg";
+import requestIconActive from "../../assets/LateralBarIcons/requests-filled.svg";
+import newRequestIconActive from "../../assets/LateralBarIcons/new-request-filled.svg";
+import documentsIconActive from "../../assets/LateralBarIcons/documents-filled.svg";
+import supportIconActive from "../../assets/LateralBarIcons/support-filled.svg";
+import configsIconActive from "../../assets/LateralBarIcons/configs-filled.svg";
+import howWorksIconActive from "../../assets/LateralBarIcons/how-works-filled.svg";
+import aboutIconActive from "../../assets/LateralBarIcons/about-filled.svg";
+import arrowIconActive from "../../assets/LateralBarIcons/inclined-arrow-blue.svg";
 
-import { useNavigation } from "../../contexts/NavigationContext"
+import { useNavigation } from "../../contexts/NavigationContext";
 
 function LateralBar() {
-  const { active, setActive } = useNavigation()
+  const { active, setActive } = useNavigation();
+
+  useEffect(() => {
+    const current = localStorage.getItem("currentSection");
+
+    setActive(current === null ? "home" : current);
+  }, []);
 
   const handleClickOption = (opt) => {
-    setActive(opt)
-  }
+    setActive(opt);
+    localStorage.setItem("currentSection", opt);
+  };
 
   return (
     <nav id="lateral-bar">
@@ -165,7 +172,7 @@ function LateralBar() {
         </li>
       </ul>
     </nav>
-  )
+  );
 }
 
-export default LateralBar
+export default LateralBar;

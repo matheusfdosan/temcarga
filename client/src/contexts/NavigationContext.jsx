@@ -1,17 +1,17 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext,  useState } from "react";
 
-const NavigationContext = createContext()
+const NavigationContext = createContext();
 
 export function NavigationProvider({ children }) {
-  const [active, setActive] = useState("home")
+  const [active, setActive] = useState("");
 
   return (
     <NavigationContext.Provider value={{ active, setActive }}>
       {children}
     </NavigationContext.Provider>
-  )
+  );
 }
 
 export function useNavigation() {
-  return useContext(NavigationContext)
+  return useContext(NavigationContext);
 }
