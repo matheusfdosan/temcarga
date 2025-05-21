@@ -1,0 +1,94 @@
+#your-requests {
+  flex: 1;
+  height: 90vh;
+  overflow-y: scroll;
+  background-color: var(--bg);
+  padding: 3rem;
+}
+
+#your-requests > h2 {
+  font-weight: 500;
+  color: var(--black-mid-clearer);
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+#filter {
+  background-color: var(--white);
+  border-radius: 1rem;
+  border: 0.1rem solid var(--border-blue);
+  padding: 2rem;
+}
+
+#filter-inputs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+#filter-inputs > label {
+  flex: 1;
+}
+
+#filter-inputs > label > h3 {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--black-clearer);
+  margin-bottom: 0.5rem;
+}
+
+#filter-inputs > label > input,
+#filter-inputs > label > select {
+  width: 100%;
+  height: 3.6rem;
+  font-size: 1.6rem;
+  padding-inline: 1rem;
+  font-family: var(--poppins);
+  background-color: var(--bg);
+  border-radius: 0.5rem;
+  border: 0.1rem solid #3939395c;
+}
+
+#filter > #filter-buttons {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#filter-buttons > button {
+  font-size: 1.6rem;
+  font-weight: normal;
+  padding: 0.9rem 1rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  font-weight: 500;
+}
+
+#filter-buttons > button:first-child {
+  border: 0.1rem solid var(--other-black);
+  color: var(--black);
+  background-color: var(--white);
+}
+
+#filter-buttons > button:last-child {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: 0.1rem solid var(--primary-color);
+}
+
+#your-requests > #horizontal-line {
+  width: 90%;
+  height: .2rem;
+  margin: 3rem auto;
+  background-color: var(--gray-clearer);
+}
+
+#requests-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
