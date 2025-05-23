@@ -1,0 +1,68 @@
+#tax-documents {
+  flex: 1;
+  height: 90vh;
+  overflow-y: scroll;
+  background-color: var(--bg);
+  padding: 3rem;
+  
+}
+
+#tax-documents h2 {
+  font-family: var(--inter);
+  color: var(--other-black);
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 2.2rem;
+}
+
+#tax-documents ul {
+  width: 100;
+  background-color: var(--white);
+  border: .1rem solid var(--primary-color-clearer);
+  padding: 2rem 0;
+  list-style: none;
+  border-radius: 1rem;
+  margin-top: 2rem;
+}
+
+#tax-documents ul li:first-child {
+  border-top: .1rem solid var(--black-mid-clearer);
+
+}
+
+#tax-documents #status {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+#tax-documents ul li {
+  padding: 1rem 2rem ;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: .1rem solid var(--black-mid-clearer);
+}
+
+#tax-documents ul li div:last-child {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#tax-documents ul li > div:last-child > img {
+  width: 2rem;
+  height: 2rem;
+}
+
+#tax-documents ul li > div:last-child > span {
+
+}
+
+#tax-documents ul li > button {
+
+}
+
+#tax-documents ul li > button > img {
+
+}
+
