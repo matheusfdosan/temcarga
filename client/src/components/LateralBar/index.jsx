@@ -81,7 +81,7 @@ function LateralBar() {
               }
               alt="new-request-icon"
             />
-            <span>Nova Solicitação</span>
+            <span>Novo Orçamento</span>
           </a>
         </li>
         <li
