@@ -1,12 +1,14 @@
-import React, { useState } from "react"
-import "./styles.css"
+import React, { useState } from "react";
+import "./styles.css";
 
-import Input from "../Input"
+import Input from "../Input";
 
-import blueMarker from "../../assets/blue-marker.svg"
-import blueBoxIcon from "../../assets/blue-box-icon.svg"
-import dateIcon from "../../assets/date-icon.svg"
-import taxDocsIcon from "../../assets/tax-docs-icon.svg"
+import blueMarker from "../../assets/blue-marker.svg";
+import blueBoxIcon from "../../assets/blue-box-icon.svg";
+import dateIcon from "../../assets/date-icon.svg";
+import taxDocsIcon from "../../assets/tax-docs-icon.svg";
+import confirmIcon from "../../assets/confirm-icon.svg";
+import FileUploader from "../FileUploader";
 
 function NewRequest() {
   return (
@@ -196,19 +198,26 @@ function NewRequest() {
               Documentos Obrigratórios
             </h3>
 
-            <input type="file" name="" id="" />
+            <FileUploader />
           </section>
         </div>
 
-        <div id="estimated-value"></div>
+        <section id="estimated-value">
+          <div>
+            <h3>Valor Estimado do Frete Automatico</h3>
+            <p>Com base nos dados fornecidos</p>
+          </div>
+          <button>Calcular Orçamento</button>
+        </section>
 
-        <div>
-          <button></button>
-          <button></button>
+        <div id="last-button">
+          <button id="confirm-form" type="submit">
+            <img src={confirmIcon} alt="confirm icon" /> Confirmar Solicitação
+          </button>
         </div>
       </form>
     </div>
-  )
+  );
 }
 
-export default NewRequest
+export default NewRequest;

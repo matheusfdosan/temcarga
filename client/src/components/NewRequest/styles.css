@@ -72,3 +72,42 @@
   display: flex;
   gap: 2rem;
 }
+
+#estimated-value {
+  flex-direction: row !important;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#estimated-value > div > h3 {
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--black);
+  margin-bottom: 1rem;
+}
+
+#last-button {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#estimated-value button,
+#confirm-form {
+  margin: 0.7rem 0;
+  padding: 1rem 2rem;
+  font-size: 1.6rem;
+  font-family: var(--inter);
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 0.5rem;
+  color: var(--white);
+  font-weight: 600;
+  transition: background-color 200ms ease;
+  cursor: pointer;
+}
+
+#estimated-value button:hover,
+#confirm-form:hover {
+  background-color: var(--primary-color-clearer);
+}
