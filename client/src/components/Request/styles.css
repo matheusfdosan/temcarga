@@ -1,6 +1,6 @@
 .request-card {
   background-color: var(--white);
-  border: 0.15rem solid var(--border-blue);
+  border: 0.2rem solid var(--border-blue);
   border-radius: 1rem;
 }
 
@@ -44,15 +44,18 @@
   margin-bottom: 3rem;
 }
 
+#type-value {
+  display: flex;
+  align-items: baseline;
+  gap: 3rem;
+}
+
 #origin-destination > div {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-#type {
-  margin-bottom: 3rem;
-}
 
 #type > h3,
 #value > h3 {
@@ -95,7 +98,7 @@
   width: 100%;
   height: 0.2rem;
   background-color: var(--gray-clearer);
-  margin: 2rem 0;
+  margin: 3rem 0;
 }
 
 #driver {

@@ -4,7 +4,6 @@
   overflow-y: scroll;
   background-color: var(--bg);
   padding: 3rem;
-  
 }
 
 #tax-documents h2 {
@@ -16,31 +15,48 @@
 }
 
 #tax-documents ul {
-  width: 100;
+  width: 100%;
+  min-width: 62.7rem;
   background-color: var(--white);
-  border: .1rem solid var(--primary-color-clearer);
-  padding: 2rem 0;
+  border: 0.1rem solid var(--primary-color-clearer);
   list-style: none;
   border-radius: 1rem;
   margin-top: 2rem;
 }
 
-#tax-documents ul li:first-child {
-  border-top: .1rem solid var(--black-mid-clearer);
-
+#tax-documents ul li:last-child {
+  border-bottom: none;
 }
 
 #tax-documents #status {
   font-weight: bold;
+}
+
+#status.valid {
   color: var(--primary-color);
 }
 
+#status.deprived {
+  color: #ff4242;
+}
+
 #tax-documents ul li {
-  padding: 1rem 2rem ;
+  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: .1rem solid var(--black-mid-clearer);
+  border-bottom: 0.1rem solid var(--primary-color-clearer);
+}
+
+#tax-documents ul li > div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#tax-documents ul li > div > span {
+  font-size: 1.4rem;
+  min-width: 30rem;
 }
 
 #tax-documents ul li div:last-child {
@@ -54,15 +70,15 @@
   height: 2rem;
 }
 
-#tax-documents ul li > div:last-child > span {
-
-}
-
 #tax-documents ul li > button {
-
+  background-color: var(--primary-color);
+  padding: 1rem 1.5rem;
+  border-radius: 10rem;
+  border: none;
+  cursor: pointer;
 }
 
 #tax-documents ul li > button > img {
-
+  width: 1.8rem;
+  height: 1.8rem;
 }
-

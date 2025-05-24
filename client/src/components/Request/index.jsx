@@ -59,6 +59,8 @@ function Request({ status, local, type, value, driver }) {
             </div>
           </div>
         </div>
+        
+        <div id="type-value">
 
         <div id="type">
           <h3>Tipo da Carga</h3>
@@ -77,15 +79,20 @@ function Request({ status, local, type, value, driver }) {
           </span>
         </div>
 
-        <div id="line"></div>
-
-        <div id="driver">
-          <img src={driver.img} alt={driver.name} />
-          <div>
-            <p>{driver.name}</p>
-            <span>Motorista</span>
-          </div>
+          
         </div>
+        {status !== "pending" && (
+          <>
+            <div id="line"></div>
+            <div id="driver">
+              <img src={driver.img} alt={driver.name} />
+              <div>
+                <p>{driver.name}</p>
+                <span>Motorista</span>
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <div id="card-footer">
         <button>Ver Detalhes</button>
