@@ -1,0 +1,181 @@
+:root {
+  --primary-light: #2c5282;
+  --gray-light: #f7fafc;
+  --gray-dark: #4a5568;
+  --white: #ffffff;
+}
+
+.support-container {
+  flex: 1;
+  height: 90vh;
+  overflow-y: scroll;
+  background-color: var(--bg);
+  padding: 3rem;
+}
+
+.support-title {
+  font-size: 2.8rem;
+  color: var(--primary-color);
+  margin-bottom: 3rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.support-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.faq-section {
+  flex: 1;
+  min-width: 30rem;
+}
+
+.faq-list {
+  border: 0.1rem solid var(--border-color);
+  border-radius: 0.8rem;
+  overflow: hidden;
+}
+
+.faq-item {
+  background-color: var(--white);
+}
+
+.faq-question {
+  width: 100%;
+  padding: 1.6rem 0;
+  text-align: left;
+  background-color: var(--white);
+  border: none;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--other-black);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.faq-icon {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.faq-answer {
+  padding: .5rem 2rem 1rem 2rem;
+  background-color: var(--primary-color-more-clearer);
+  border-radius: .5rem;
+  font-size: 1.6rem;
+}
+
+.support-section {
+  flex: 1;
+  min-width: 30rem;
+}
+
+.support-options {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.whatsapp-button,
+.secondary-button,
+.submit-button {
+  padding: 1.4rem 2rem;
+  border-radius: 0.6rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.whatsapp-button {
+  background-color: #25d366;
+  color: var(--white);
+  border: none;
+}
+
+.whatsapp-button:hover {
+  background-color: #128c7e;
+}
+
+.message-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.message-form label {
+  font-size: 1.8rem;
+  color: var(--gray-dark);
+}
+
+.whatsapp-button > img {
+  width: 2rem;
+  height: 2rem;
+}
+
+.message-form textarea {
+  height: 12rem;
+  padding: 1.2rem;
+  border: 0.1rem solid var(--primary-color-clearer);
+  border-radius: 0.6rem;
+  font-size: 1.6rem;
+  min-height: 4.5rem;
+  max-height: 20rem;
+  resize: vertical;
+}
+
+.message-form textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.submit-button {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+}
+
+.submit-button:hover {
+  background-color: var(--primary-light);
+  transform: translateY(-0.1rem);
+}
+
+
+@media (max-width: 768px) {
+  .support-content {
+    flex-direction: column;
+  }
+
+  .faq-section,
+  .support-section {
+    min-width: 100%;
+  }
+
+  .contact-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .info-item {
+    justify-content: center;
+  }
+}
