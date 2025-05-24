@@ -12,6 +12,7 @@ import TaxDocuments from "../../components/TaxDocumentos"
 import About from "../../components/About"
 import HowItWorks from "../../components/HowItWorks"
 import Support from "../../components/Support"
+import Settings from "../../components/Settings"
 
 function HomePage() {
   const { active } = useNavigation()
@@ -25,8 +26,8 @@ function HomePage() {
         {active === "your-requests" && <YourRequests />}
         {active === "new-request" && <NewRequest />}
         {active === "documents" && <TaxDocuments />}
-        {active === "support" && <Support/>}
-        {active === "settings" && "oi"}
+        {active === "support" && <Support />}
+        {active === "settings" && <Settings />}
         {active === "about" && <About />}
         {active === "how-works" && <HowItWorks />}
       </div>

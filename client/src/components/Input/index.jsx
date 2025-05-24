@@ -88,6 +88,11 @@ function Input({ type = "text", label, selectList }) {
             required
           />
         </label>
+      ) : type === "email" ? (
+        <label htmlFor={label} className="form-input">
+          <span>{label}</span>
+          <input type="email" placeholder="Digite seu email" id={label} />
+        </label>
       ) : type === "select" ? (
         <label htmlFor={label} className="form-input">
           <span>{label}</span>
@@ -97,6 +102,19 @@ function Input({ type = "text", label, selectList }) {
             ))}
           </select>
         </label>
+      ) : type == "tel" ? (
+        <label className="form-input" htmlFor={inputId}>
+          <span>{label}</span>
+          <IMaskInput
+            mask={[{ mask: "(00) 00000-0000" }]}
+            onAccept={handleAccept}
+            id={inputId}
+            placeholder="(00) 00000-0000"
+            overwrite={true}
+            required
+          />
+        </label>
+
       ) : label == "CPF ou CNPJ*" ? (
         <label className="form-input" htmlFor={inputId}>
           <span>{label}</span>
@@ -105,6 +123,7 @@ function Input({ type = "text", label, selectList }) {
             onAccept={handleAccept}
             id={inputId}
             overwrite={true}
+            placeholder="Digite seu CPF ou CNPJ"
             required
           />
         </label>

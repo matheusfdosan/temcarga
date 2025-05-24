@@ -1,0 +1,69 @@
+#settings {
+  flex: 1;
+  height: 90vh;
+  overflow-y: scroll;
+  background-color: var(--bg);
+  padding: 3rem;
+}
+
+#settings h2 {
+  font-family: var(--inter);
+  color: var(--other-black);
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 2.2rem;
+}
+
+#settings p {
+  color: var(--black-mid-clearer);
+  font-family: var(--inter);
+  margin-bottom: 3rem;
+}
+
+#settings > #account {
+  width: 100%;
+  background-color: var(--white);
+  border: 0.1rem solid var(--primary-color-clearer);
+  padding: 2rem;
+  border-radius: 1rem;
+}
+
+#settings > #account > div:nth-child(1) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+#settings > #account > div:nth-child(1) > h3 {
+  font-family: var(--inter);
+  font-size: 1.6rem;
+  color: var(--other-black);
+}
+
+#settings > #account > div:nth-child(1) > button {
+  margin: 0.7rem 0;
+  padding: 1rem;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.6rem;
+  color: var(--white);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 200ms ease, box-shadow 200ms ease;
+}
+
+#settings > #account > div:nth-child(1) > button:hover {
+  background-color: var(--primary-color-darker);
+  box-shadow: var(--shadow-clearer);
+}
+
+
+#settings > #account > div:nth-child(2),
+#settings > #account > div:nth-child(3) {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
