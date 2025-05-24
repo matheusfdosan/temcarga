@@ -1,0 +1,128 @@
+.about-container {
+  flex: 1;
+  height: 90vh;
+  overflow-y: scroll;
+  background-color: var(--bg);
+  padding: 3rem;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 4rem;
+  margin-bottom: 4rem;
+  border-bottom: .2rem solid var(--primary-color-more-clearer);
+}
+
+.hero-section h1 {
+  font-size: 2.6rem;
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+}
+
+.hero-description {
+  font-size: 1.6rem;
+  color: var(--other-black);
+  max-width: 80rem;
+  margin: auto;
+}
+
+.about-cards-section {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 6rem;
+}
+
+.about-card {
+  flex: 1;
+  min-width: 25rem;
+  padding: 3rem;
+  background-color: var(--white);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+
+.about-card-icon {
+  background-color: var(--primary-color-more-clearer);
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+}
+.about-card-icon img {
+  width: 4rem;
+  height: 4rem;
+}
+
+.about-card h3 {
+  color: var(--other-black);
+  margin-bottom: 15px;
+  font-size: 1.6rem;
+}
+
+.about-card p {
+  color: var(--other-black);
+  line-height: 1.5;
+}
+
+.history-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4rem;
+  align-items: center;
+  margin-bottom: 6rem;
+  padding: 2rem;
+}
+
+.history-content {
+  flex: 1;
+  min-width: 300px;
+}
+
+.history-content h2 {
+  font-size: 2.4rem;
+  color: var(--primary-color-clearer);
+  margin-bottom: 2rem;
+}
+
+.history-content p {
+  color: var(--other-black);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.history-image {
+  flex: 1;
+  min-width: 30rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30rem;
+  border-radius: 1rem;
+  background-image: url("https://images.unsplash.com/photo-1592838064575-70ed626d3a0e?q=80&w=1418&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (max-width: 768px) {
+  .about-cards-section {
+    flex-direction: column;
+  }
+
+  .history-section {
+    flex-direction: column;
+  }
+
+  .about-footer {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
