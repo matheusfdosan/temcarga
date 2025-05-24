@@ -1,17 +1,20 @@
-import React from "react";
-import "./styles.css";
-import { useNavigation } from "../../contexts/NavigationContext";
+import React from "react"
+import "./styles.css"
+import { useNavigation } from "../../contexts/NavigationContext"
 
-import Header from "../../components/Header";
-import LateralBar from "../../components/LateralBar";
+import Header from "../../components/Header"
+import LateralBar from "../../components/LateralBar"
 
-import Home from "../../components/Home";
-import YourRequests from "../../components/YourRequests";
-import NewRequest from "../../components/NewRequest";
-import TaxDocuments from "../../components/FaxDocumentos";
+import Home from "../../components/Home"
+import YourRequests from "../../components/YourRequests"
+import NewRequest from "../../components/NewRequest"
+import TaxDocuments from "../../components/TaxDocumentos"
+import About from "../../components/About"
+import HowItWorks from "../../components/HowItWorks"
+import Support from "../../components/Support"
 
 function HomePage() {
-  const { active } = useNavigation();
+  const { active } = useNavigation()
 
   return (
     <>
@@ -22,13 +25,13 @@ function HomePage() {
         {active === "your-requests" && <YourRequests />}
         {active === "new-request" && <NewRequest />}
         {active === "documents" && <TaxDocuments />}
-        {active === "support" && "oi"}
+        {active === "support" && <Support/>}
         {active === "settings" && "oi"}
-        {active === "about" && "oi"}
-        {active === "how-works" && "oi"}
+        {active === "about" && <About />}
+        {active === "how-works" && <HowItWorks />}
       </div>
     </>
-  );
+  )
 }
 
-export default HomePage;
+export default HomePage
