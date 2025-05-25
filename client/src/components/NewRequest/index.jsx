@@ -1,16 +1,55 @@
-import React, { useState } from "react";
-import "./styles.css";
+import React, { useState } from "react"
+import "./styles.css"
 
-import Input from "../Input";
+import Input from "../Input"
 
-import blueMarker from "../../assets/blue-marker.svg";
-import blueBoxIcon from "../../assets/blue-box-icon.svg";
-import dateIcon from "../../assets/date-icon.svg";
-import taxDocsIcon from "../../assets/tax-docs-icon.svg";
-import confirmIcon from "../../assets/confirm-icon.svg";
-import FileUploader from "../FileUploader";
+import blueMarker from "../../assets/blue-marker.svg"
+import blueBoxIcon from "../../assets/blue-box-icon.svg"
+import dateIcon from "../../assets/date-icon.svg"
+import taxDocsIcon from "../../assets/tax-docs-icon.svg"
+import confirmIcon from "../../assets/confirm-icon.svg"
+import FileUploader from "../FileUploader"
 
 function NewRequest() {
+  const [formData, setFormData] = useState({
+    location: {
+      origin: {
+        cep: "",
+        city: "",
+        state: "",
+        complete_address: "",
+      },
+      destination: {
+        cep: "",
+        city: "",
+        state: "",
+        complete_address: "",
+      },
+    },
+    load_description: {
+      type: "",
+      weigth: "",
+      size: {
+        length: "",
+        width: "",
+        height: "",
+      },
+      features: {
+        perishable: false,
+        fragile: false,
+        insurance_included: false,
+      },
+      goods_value: "",
+      additional_observations: "",
+    },
+    dates: {
+      collect_date: "",
+      estimated_delivery_date: "",
+    },
+    invoice_document: "",
+    estimated_shipping_cost: "",
+  })
+
   return (
     <div id="new-request">
       <h2>Faça uma novo orçamento</h2>
@@ -217,7 +256,7 @@ function NewRequest() {
         </div>
       </form>
     </div>
-  );
+  )
 }
 
-export default NewRequest;
+export default NewRequest

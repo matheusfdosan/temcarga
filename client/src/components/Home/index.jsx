@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import "./styles.css"
 import Request from "../Request"
 
@@ -8,9 +8,16 @@ import completedRequests from "../../assets/completed-requests-icon.svg"
 import systemMessages from "../../assets/system-messages-icon.svg"
 
 function Home() {
+  const [name, setName] = useState("")
+
+  useEffect(() => {
+    const acess = JSON.parse(localStorage.getItem("login"))
+    setName(acess.auth.name)
+  })
+
   return (
     <div id="home">
-      <h2>Olá, Agilnaldo Rossi!</h2>
+      <h2>Olá, {name}!</h2>
       <p>Bem-vindo(a) de volta.</p>
 
       <div id="home-cards-container">

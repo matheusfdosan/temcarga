@@ -1,14 +1,30 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import "./styles.css"
+
 import logo from "../../assets/temcarga.svg"
 import searchIcon from "../../assets/search-icon.svg"
 import notificationIcon from "../../assets/notification-icon.svg"
 
+import { useNavigation } from "../../contexts/NavigationContext"
+
 function Header() {
+  const { active, setActive } = useNavigation()
+
+  const [name, setName] = useState("")
+
+  useEffect(() => {
+    const acess = JSON.parse(localStorage.getItem("login"))
+    setName(acess.auth.name)
+  })
+
   return (
-    <header>
+    <header id="homepage-header">
       <div id="header-container">
-        <a href="/">
+        <a
+          onClick={() => {
+            setActive("home")
+          }}
+        >
           <img src={logo} alt="tem carga logo" />
         </a>
 
@@ -25,12 +41,8 @@ function Header() {
           <div id="vertical-line"></div>
 
           <div id="user-place">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyzTWQoCUbRNdiyorem5Qp1zYYhpliR9q0Bw&s"
-              alt="Aginaldo Rossi"
-            />
             <div>
-              <h2>Aginaldo Rossi</h2>
+              <h2>{name}</h2>
               <p>Cliente</p>
             </div>
           </div>

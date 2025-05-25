@@ -5,8 +5,7 @@ import "./index.css"
 
 import { NavigationProvider } from "./contexts/NavigationContext"
 
-import Landing from "./templates/Landing"
-import HomePage from "./templates/HomePage"
+import ChooseRoot from "./templates/ChooseRoot"
 import Login from "./templates/Login"
 import SignUp from "./templates/SignUp"
 
@@ -15,7 +14,7 @@ createRoot(document.getElementById("root")).render(
     <NavigationProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<ChooseRoot />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<SignUp />} />
         </Routes>

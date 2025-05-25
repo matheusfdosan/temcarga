@@ -3,6 +3,11 @@ import "./styles.css"
 import Input from "../Input"
 
 function Settings() {
+  const handleLogOut = () => {
+    localStorage.removeItem("login")
+    location.href = "/"
+  }
+
   return (
     <div id="settings">
       <h2>Configurações da Conta</h2>
@@ -22,6 +27,9 @@ function Settings() {
           <Input type="cpfcnpj" label={"CPF ou CNPJ*"} />
         </div>
       </form>
+      <button id="log-out" onClick={handleLogOut}>
+        Sair da Conta
+      </button>
     </div>
   )
 }

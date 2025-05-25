@@ -1,4 +1,4 @@
-header {
+#homepage-header {
   width: 100%;
   background-color: var(--white);
   border-bottom: 0.1rem solid var(--border-clearer);
@@ -14,6 +14,10 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+#header-container > a {
+  cursor: pointer;
 }
 
 #header-container > a > img {

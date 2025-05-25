@@ -59,11 +59,30 @@
   box-shadow: var(--shadow-clearer);
 }
 
-
 #settings > #account > div:nth-child(2),
 #settings > #account > div:nth-child(3) {
   display: flex;
   gap: 2rem;
   margin-bottom: 1rem;
   width: 100%;
+}
+
+#log-out {
+  margin: 0.7rem 0;
+  float: right;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #ff4343;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.6rem;
+  color: var(--white);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 200ms ease, box-shadow 200ms ease;
+}
+
+#log-out:hover {
+  background-color: #b62e2e;
+  box-shadow: var(--shadow-clearer);
 }

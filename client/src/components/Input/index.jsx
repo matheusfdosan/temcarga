@@ -4,18 +4,13 @@ import eyeOnImg from "../../assets/eye-on.svg"
 import { useState } from "react"
 import { IMaskInput } from "react-imask"
 
-function Input({ type = "text", label, selectList }) {
+function Input({ type = "text", label, selectList = [], value, onChange, name }) {
   const [showPassword, setShowPassword] = useState(false)
-  const [inputValue, setInputValue] = useState("")
-
-  const handleInputChange = ({ target }) => {
-    setInputValue(target.value)
-  }
-
   const inputId = label.replace(/\s+/g, "-").toLowerCase()
+  const inputName = name || inputId
 
-  const handleAccept = (value, mask) => {
-    setCpfCnpj(value)
+  const handleMaskedChange = (val) => {
+    onChange({ target: { name: inputName, value: val } })
   }
 
   return (
@@ -25,14 +20,14 @@ function Input({ type = "text", label, selectList }) {
           <span>{label}</span>
           <div className="input-wrapper">
             <input
-              onChange={handleInputChange}
-              name="input"
               id={inputId}
+              name={inputName}
               className="input-password"
               minLength={8}
               required
               type={showPassword ? "text" : "password"}
-              value={inputValue}
+              value={value}
+              onChange={onChange}
             />
             <button
               type="button"
@@ -47,29 +42,52 @@ function Input({ type = "text", label, selectList }) {
           </div>
         </label>
       ) : type === "date" ? (
-        <label className="form-input" htmlFor={label}>
+        <label className="form-input" htmlFor={inputId}>
           <span>{label}</span>
-          <input type="date" id={label} name={label} />
+          <input
+            type="date"
+            id={inputId}
+            name={inputName}
+            value={value}
+            onChange={onChange}
+          />
         </label>
       ) : type === "cep" ? (
-        <label className="form-input" htmlFor={label}>
+        <label className="form-input" htmlFor={inputId}>
           <span>{label}</span>
           <IMaskInput
-            mask={[{ mask: "00.000-00" }]}
-            overwrite={true}
-            id={label}
+            mask="00.000-00"
+            id={inputId}
             required
+            name={inputName}
             placeholder="00.000-00"
+            value={value}
+            onAccept={handleMaskedChange}
           />
         </label>
       ) : type === "textbox" ? (
-        <label id="input-textbox-label" htmlFor={label}>
+        <label id="input-textbox-label" htmlFor={inputId}>
           <span>{label}</span>
-          <textarea name={label} id={label}></textarea>
+          <textarea
+            id={inputId}
+            name={inputName}
+            value={value}
+            onChange={onChange}
+          />
         </label>
       ) : type === "checkbox" ? (
-        <label id="input-checkbox-label" htmlFor={label}>
-          <input type="checkbox" id={label} name={label} />
+        <label id="input-checkbox-label" htmlFor={inputId}>
+          <input
+            type="checkbox"
+            id={inputId}
+            name={inputName}
+            checked={value}
+            onChange={(e) =>
+              onChange({
+                target: { name: inputName, value: e.target.checked },
+              })
+            }
+          />
           <span>{label}</span>
         </label>
       ) : type === "measure" ? (
@@ -78,64 +96,85 @@ function Input({ type = "text", label, selectList }) {
           <IMaskInput
             mask={Number}
             scale={2}
-            id={inputId}
             signed={false}
             thousandsSeparator="."
             radix=","
             mapToRadix={["."]}
-            onAccept={handleAccept}
-            overwrite={true}
+            id={inputId}
+            name={inputName}
+            value={value}
             required
+            onAccept={handleMaskedChange}
           />
         </label>
       ) : type === "email" ? (
-        <label htmlFor={label} className="form-input">
+        <label htmlFor={inputId} className="form-input">
           <span>{label}</span>
-          <input type="email" placeholder="Digite seu email" id={label} />
+          <input
+            type="email"
+            id={inputId}
+            name={inputName}
+            placeholder="Digite seu email"
+            value={value}
+            onChange={onChange}
+          />
         </label>
       ) : type === "select" ? (
-        <label htmlFor={label} className="form-input">
+        <label htmlFor={inputId} className="form-input">
           <span>{label}</span>
-          <select name={label} id={label}>
+          <select
+            id={inputId}
+            name={inputName}
+            value={value}
+            onChange={onChange}
+          >
             {selectList.map((item) => (
-              <option value={item}>{item}</option>
+              <option key={item} value={item}>
+                {item}
+              </option>
             ))}
           </select>
         </label>
-      ) : type == "tel" ? (
+      ) : type === "tel" ? (
         <label className="form-input" htmlFor={inputId}>
           <span>{label}</span>
           <IMaskInput
-            mask={[{ mask: "(00) 00000-0000" }]}
-            onAccept={handleAccept}
+            mask="(00) 00000-0000"
             id={inputId}
+            name={inputName}
             placeholder="(00) 00000-0000"
-            overwrite={true}
             required
+            value={value}
+            onAccept={handleMaskedChange}
           />
         </label>
-
-      ) : label == "CPF ou CNPJ*" ? (
+      ) : label === "CPF ou CNPJ*" ? (
         <label className="form-input" htmlFor={inputId}>
           <span>{label}</span>
           <IMaskInput
-            mask={[{ mask: "000.000.000-00" }, { mask: "00.000.000/0000-00" }]}
-            onAccept={handleAccept}
+            mask={[
+              { mask: "000.000.000-00" },
+              { mask: "00.000.000/0000-00" },
+            ]}
             id={inputId}
-            overwrite={true}
+            name={inputName}
             placeholder="Digite seu CPF ou CNPJ"
             required
+            value={value}
+            onAccept={handleMaskedChange}
           />
         </label>
       ) : (
         <label className="form-input" htmlFor={inputId}>
           <span>{label}</span>
           <input
-            name="input"
+            type={type}
             id={inputId}
+            name={inputName}
             className="input"
             required
-            type={type}
+            value={value}
+            onChange={onChange}
           />
         </label>
       )}
