@@ -4,32 +4,148 @@ import Input from "../../components/Input"
 import Button from "../../components/Button"
 import ListofLinks from "../../components/ListofLinks"
 import LogoWhite from "../../assets/LogoWhite.svg"
+import { useState } from "react"
+import signUpService from "../../utils/signUpService"
+import loginService from "../../utils/loginService"
 
 function SignUp() {
-  const handleVerifyPasswords = () => {
-    console.log("oi")
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    cpf_cnpj: "",
+    password: "",
+    confirmPassword: "",
+  })
+  const [msg, setMsg] = useState("")
+
+  const handleChange = ({ target }) => {
+    const { name, value } = target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    // Verifica se todos os input estão preenchidos
+    const isAllFilled = Object.values(formData).every(
+      (val) => val !== null && val !== undefined && String(val).trim() !== ""
+    )
+
+    // Verifica se todas as senhas estão iguais
+    const isPasswordsSame = formData.password === formData.confirmPassword
+
+    // Verifica se a senha tem mais de 8 dígitos
+    const isPasswordgreaterThanEigth = formData.password.length >= 8
+
+    if (!isAllFilled) {
+      setMsg("Preencha todas as informações!")
+      return
+    }
+
+    if (!isPasswordsSame) {
+      setMsg("As senhas não se coincidem!")
+      return
+    }
+
+    if (!isPasswordgreaterThanEigth) {
+      setMsg("Crie uma senha com mais de 8 dígitos!")
+      return
+    }
+
+    setMsg("")
+    await doSignUp(formData)
+  }
+
+  const doLogin = async (userLogin) => {
+    try {
+      const loginRes = await loginService(userLogin)
+
+      if (loginRes.acess) {
+        localStorage.setItem(
+          "login",
+          JSON.stringify({
+            token: loginRes.token,
+            auth: {
+              name: formData.name,
+              email: formData.email,
+              cpf_cnpj: formData.cpf_cnpj,
+              password: formData.password,
+            },
+          })
+        )
+      }
+    } catch (err) {
+      console.error("Erro no login:", err)
+      setMsg("Erro ao fazer login. Tente novamente.")
+    }
+  }
+
+  const doSignUp = async (form) => {
+    try {
+      const response = await signUpService(form)
+      console.log("Cadastro feito com sucesso!")
+      if (response.message == "Usuário registrado") {
+        await doLogin({ email: form.email, password: form.password })
+        location.href = "/"
+      }
+    } catch (err) {
+      console.error("Erro no cadastro:", err)
+      setMsg("Erro ao cadastrar. Tente novamente.")
+    }
   }
 
   return (
     <div id="SignUpContainer">
       <div id="SignUpContent">
-        <form method="post">
+        <form method="post" onSubmit={handleSubmit}>
           <h2>Adicione seus dados para começar</h2>
-          <Input type="text" label="Digite seu nome*" />
-          <Input type="email" label="E-mail*" />
-          <Input type="text" label="CPF ou CNPJ*" />
+          <Input
+            type="text"
+            label="Digite seu nome*"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+          <Input
+            type="email"
+            label="E-mail*"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          <Input
+            type="text"
+            label="CPF ou CNPJ*"
+            name="cpf_cnpj"
+            value={formData.cpf_cnpj}
+            onChange={handleChange}
+          />
 
           <div id="password-confirm">
-            <Input type="password" label="Senha (mínimo 8 digitos)" />
-            <Input type="password" label="Confirme a sua senha*" />
+            <Input
+              type="password"
+              name="password"
+              label="Senha* (mínimo 8 digitos)"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            <Input
+              type="password"
+              name="confirmPassword"
+              label="Confirme a sua senha*"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+            />
           </div>
 
           <span id="terms">
             Ao fazer o cadastro você concorda com os{" "}
-            <a href="">Termos de Privacidade</a>
+            <a href="#">Termos de Privacidade</a>
           </span>
 
-          <Button text="CADASTRAR" whenIClick={handleVerifyPasswords} />
+          <p id="error">{msg}</p>
+
+          <Button text="CADASTRAR" />
 
           <p id="login-link">
             Você já possui uma conta? <a href="login">Faça Login</a>

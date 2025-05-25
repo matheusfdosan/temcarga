@@ -102,6 +102,11 @@
   outline: 0.1rem solid var(--primary-color);
 }
 
+#error {
+  text-align: center;
+  color: red;
+}
+
 @media (max-width: 930px) {
   .ImgComponentSignUp {
     display: none;
