@@ -29,6 +29,7 @@ function Login() {
           JSON.stringify({
             token: loginRes.token,
             auth: {
+              id: loginRes.user.id,
               name: loginRes.user.name,
               email: loginRes.user.email,
               cpf_cnpj: loginRes.user.cpf_cnpj,

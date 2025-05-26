@@ -10,6 +10,11 @@
   cursor: pointer;
 }
 
+#file-input-container button:focus {
+  outline: 0.2rem solid var(--primary-color-darker);
+  
+}
+
 #file-input-container img {
   width: 4rem;
   height: 4rem;
@@ -34,4 +39,11 @@
   border-radius: 0.5rem;
   color: var(--white);
   font-weight: 600;
+}
+
+.file-error-msg {
+  color: red;
+  font-size: 1.4rem;
+  margin-top: 0.5rem;
+  display: block;
 }

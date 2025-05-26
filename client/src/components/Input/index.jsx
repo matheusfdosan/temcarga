@@ -1,10 +1,19 @@
-import "./style.css"
-import eyeOffImg from "../../assets/eye-off.svg"
-import eyeOnImg from "../../assets/eye-on.svg"
 import { useState } from "react"
 import { IMaskInput } from "react-imask"
+import eyeOffImg from "../../assets/eye-off.svg"
+import eyeOnImg from "../../assets/eye-on.svg"
+import "./style.css"
 
-function Input({ type = "text", label, selectList = [], value, onChange, name }) {
+function Input({
+  type = "text",
+  label,
+  selectList = [],
+  value,
+  inputRef,
+  onChange,
+  name,
+  desc,
+}) {
   const [showPassword, setShowPassword] = useState(false)
   const inputId = label.replace(/\s+/g, "-").toLowerCase()
   const inputName = name || inputId
@@ -25,6 +34,7 @@ function Input({ type = "text", label, selectList = [], value, onChange, name })
               className="input-password"
               minLength={8}
               required
+              ref={inputRef}
               type={showPassword ? "text" : "password"}
               value={value}
               onChange={onChange}
@@ -49,18 +59,24 @@ function Input({ type = "text", label, selectList = [], value, onChange, name })
             id={inputId}
             name={inputName}
             value={value}
+            ref={inputRef}
+            required
             onChange={onChange}
+            min="2025-01-01"
+            max="2030-12-31"
           />
         </label>
       ) : type === "cep" ? (
         <label className="form-input" htmlFor={inputId}>
           <span>{label}</span>
           <IMaskInput
-            mask="00.000-00"
+            mask="00000-000"
             id={inputId}
+            ref={inputRef}
             required
+            minLength={9}
             name={inputName}
-            placeholder="00.000-00"
+            placeholder="00000-000"
             value={value}
             onAccept={handleMaskedChange}
           />
@@ -71,6 +87,7 @@ function Input({ type = "text", label, selectList = [], value, onChange, name })
           <textarea
             id={inputId}
             name={inputName}
+            ref={inputRef}
             value={value}
             onChange={onChange}
           />
@@ -81,6 +98,7 @@ function Input({ type = "text", label, selectList = [], value, onChange, name })
             type="checkbox"
             id={inputId}
             name={inputName}
+            ref={inputRef}
             checked={value}
             onChange={(e) =>
               onChange({
@@ -95,9 +113,9 @@ function Input({ type = "text", label, selectList = [], value, onChange, name })
           <span>{label}</span>
           <IMaskInput
             mask={Number}
-            scale={2}
-            signed={false}
+            scale={2}          
             thousandsSeparator="."
+            ref={inputRef}
             radix=","
             mapToRadix={["."]}
             id={inputId}
@@ -115,6 +133,7 @@ function Input({ type = "text", label, selectList = [], value, onChange, name })
             id={inputId}
             name={inputName}
             placeholder="Digite seu email"
+            ref={inputRef}
             value={value}
             onChange={onChange}
           />
@@ -125,11 +144,17 @@ function Input({ type = "text", label, selectList = [], value, onChange, name })
           <select
             id={inputId}
             name={inputName}
+            ref={inputRef}
             value={value}
             onChange={onChange}
+            required
+            title={desc}
           >
-            {selectList.map((item) => (
-              <option key={item} value={item}>
+            <option value="" disabled>
+              Selecione...
+            </option>
+            {selectList.map((item, index) => (
+              <option key={index} value={item}>
                 {item}
               </option>
             ))}
@@ -144,6 +169,7 @@ function Input({ type = "text", label, selectList = [], value, onChange, name })
             name={inputName}
             placeholder="(00) 00000-0000"
             required
+            ref={inputRef}
             value={value}
             onAccept={handleMaskedChange}
           />
@@ -152,13 +178,11 @@ function Input({ type = "text", label, selectList = [], value, onChange, name })
         <label className="form-input" htmlFor={inputId}>
           <span>{label}</span>
           <IMaskInput
-            mask={[
-              { mask: "000.000.000-00" },
-              { mask: "00.000.000/0000-00" },
-            ]}
+            mask={[{ mask: "000.000.000-00" }, { mask: "00.000.000/0000-00" }]}
             id={inputId}
             name={inputName}
             placeholder="Digite seu CPF ou CNPJ"
+            ref={inputRef}
             required
             value={value}
             onAccept={handleMaskedChange}
@@ -172,6 +196,7 @@ function Input({ type = "text", label, selectList = [], value, onChange, name })
             id={inputId}
             name={inputName}
             className="input"
+            ref={inputRef}
             required
             value={value}
             onChange={onChange}

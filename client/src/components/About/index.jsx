@@ -54,11 +54,6 @@ const About = () => {
             esse processo, garantindo segurança e transparência para ambas as
             partes.
           </p>
-          <p>
-            Desde nossa fundação, já facilitamos milhares de conexões e
-            continuamos a crescer, sempre com foco na qualidade do serviço e na
-            satisfação de nossos usuários.
-          </p>
         </div>
         <div className="history-image"></div>
       </section>
