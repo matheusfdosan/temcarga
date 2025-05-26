@@ -47,7 +47,7 @@
 #type-value {
   display: flex;
   align-items: baseline;
-  gap: 3rem;
+  gap: 5rem;
 }
 
 #origin-destination > div {

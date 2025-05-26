@@ -1,8 +1,24 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import "./styles.css"
 import Request from "../Request"
+import getRequests from "../../utils/getRequests.js"
 
 function YourRequests() {
+  const [requests, setRequests] = useState([])
+
+  const getRequestsFunc = async () => {
+    return await getRequests(JSON.parse(localStorage.getItem("login")).auth.id)
+  }
+
+  useEffect(() => {
+    const fetchRequests = async () => {
+      const result = await getRequestsFunc()
+      setRequests(result)
+    }
+  
+    fetchRequests()
+  }, [])
+
   return (
     <div id="your-requests">
       <h2>Suas Solicitações</h2>
@@ -43,50 +59,18 @@ function YourRequests() {
       <div id="horizontal-line"></div>
 
       <div id="requests-container">
-        <Request
-          status={"in-progress"}
-          local={{ origin: "São Paulo, SP", destination: "Rio de Janeiro, RJ" }}
-          type={"eletrônicos"}
-          value={2500}
-          driver={{
-            name: "Daniel Rodrigues",
-            img: "https://media.istockphoto.com/id/1396633199/pt/foto/happy-truck-driver-looking-through-side-window-while-driving-his-truck.jpg?s=612x612&w=0&k=20&c=pIka2KPhH-UWkTrA0H6_qFZnJs-uRCIkFdCIJd-Exec=",
-            tracker: { lat: -23.664803341334487, long: -46.64695904003448 },
-          }}
-        />
-        <Request
-          status={"pending"}
-          local={{ origin: "São Paulo, SP", destination: "Rio de Janeiro, RJ" }}
-          type={"eletrônicos"}
-          value={2500}
-          driver={{
-            name: "Daniel Rodrigues",
-            img: "https://media.istockphoto.com/id/1396633199/pt/foto/happy-truck-driver-looking-through-side-window-while-driving-his-truck.jpg?s=612x612&w=0&k=20&c=pIka2KPhH-UWkTrA0H6_qFZnJs-uRCIkFdCIJd-Exec=",
-            tracker: { lat: -23.664803341334487, long: -46.64695904003448 },
-          }}
-        />
-        <Request
-          status={"completed"}
-          local={{ origin: "São Paulo, SP", destination: "Rio de Janeiro, RJ" }}
-          type={"eletrônicos"}
-          value={2500}
-          driver={{
-            name: "Daniel Rodrigues",
-            img: "https://media.istockphoto.com/id/1396633199/pt/foto/happy-truck-driver-looking-through-side-window-while-driving-his-truck.jpg?s=612x612&w=0&k=20&c=pIka2KPhH-UWkTrA0H6_qFZnJs-uRCIkFdCIJd-Exec=",
-            tracker: { lat: -23.664803341334487, long: -46.64695904003448 },
-          }}
-        />
-        <Request
-          status={"canceled"}
-          local={{ origin: "São Paulo, SP", destination: "Rio de Janeiro, RJ" }}
-          type={"eletrônicos"}
-          value={2500}
-          driver={{
-            name: "Daniel Rodrigues",
-            img: "https://media.istockphoto.com/id/1396633199/pt/foto/happy-truck-driver-looking-through-side-window-while-driving-his-truck.jpg?s=612x612&w=0&k=20&c=pIka2KPhH-UWkTrA0H6_qFZnJs-uRCIkFdCIJd-Exec=",
-            tracker: { lat: -23.664803341334487, long: -46.64695904003448 },
-          }}
-        />
+        {requests?.map((request) => (
+          <Request
+            id={request.id}
+            status={request.status}
+            local={{
+              origin: request.origin_city,
+              destination: request.destination_city,
+            }}
+            type={request.type}
+            value={request.estimated_shipping_cost}
+          />
+        ))}
       </div>
     </div>
   )

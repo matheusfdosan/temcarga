@@ -59,27 +59,25 @@ function Request({ status, local, type, value, driver }) {
             </div>
           </div>
         </div>
-        
+
         <div id="type-value">
+          <div id="type">
+            <h3>Tipo da Carga</h3>
+            <span>
+              <img src={boxIcon} alt="box-icon" /> {type}
+            </span>
+          </div>
 
-        <div id="type">
-          <h3>Tipo da Carga</h3>
-          <span>
-            <img src={boxIcon} alt="box-icon" /> {type}
-          </span>
-        </div>
-
-        <div id="value">
-          <h3>Valor Estimado</h3>
-          <span>
-            {value.toLocaleString("pt-br", {
-              style: "currency",
-              currency: "BRL",
-            })}
-          </span>
-        </div>
-
-          
+          <div id="value">
+            <h3>Valor Estimado</h3>
+            <span>
+              {parseFloat(value).toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+                currencyDisplay: "symbol",
+              })}
+            </span>
+          </div>
         </div>
         {status !== "pending" && (
           <>

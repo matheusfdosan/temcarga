@@ -66,11 +66,11 @@ function SignUp() {
           JSON.stringify({
             token: loginRes.token,
             auth: {
-              id: formData.id,
-              name: formData.name,
-              email: formData.email,
-              cpf_cnpj: formData.cpf_cnpj,
-              password: formData.password,
+              id: loginRes.user.id,
+              name: loginRes.user.name,
+              email: loginRes.user.email,
+              cpf_cnpj: loginRes.user.cpf_cnpj,
+              password: loginRes.user.password,
             },
           })
         )
