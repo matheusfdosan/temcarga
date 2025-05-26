@@ -15,7 +15,7 @@ function YourRequests() {
       const result = await getRequestsFunc()
       setRequests(result)
     }
-  
+
     fetchRequests()
   }, [])
 
@@ -59,8 +59,9 @@ function YourRequests() {
       <div id="horizontal-line"></div>
 
       <div id="requests-container">
-        {requests?.map((request) => (
+        {requests?.map((request, index) => (
           <Request
+            key={index}
             id={request.id}
             status={request.status}
             local={{

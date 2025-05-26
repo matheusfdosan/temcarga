@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import "./styles.css"
 
 import pendingIcon from "../../assets/StatusIcons/pending-icon.svg"
@@ -12,7 +12,19 @@ import destinationIcon from "../../assets/destination-icon.svg"
 import boxIcon from "../../assets/box-icon.svg"
 import loopIcon from "../../assets/loop-icon.svg"
 
-function Request({ status, local, type, value, driver }) {
+import ModalRequest from "../ModalRequest"
+
+function Request({ id, status, local, type, value, driver }) {
+  const [modal, setModal] = useState(false)
+
+  const handleSeeDetails = () => {
+    setModal(true)
+  }
+
+  const handleCloseModal = (closeModal) => {
+    setModal(closeModal)
+  }
+
   return (
     <div className="request-card">
       <div className="container">
@@ -93,13 +105,15 @@ function Request({ status, local, type, value, driver }) {
         )}
       </div>
       <div id="card-footer">
-        <button>Ver Detalhes</button>
+        <button onClick={handleSeeDetails}>Ver Detalhes</button>
 
         <button>
           <img src={loopIcon} alt="loop-icon" />
           Repetir Solicitação
         </button>
       </div>
+
+      {modal && <ModalRequest closeModal={handleCloseModal} id={id} />}
     </div>
   )
 }
