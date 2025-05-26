@@ -30,6 +30,7 @@ const newRequestService = async (form) => {
         collect_date: form.dates.collect_date,
         estimated_delivery_date: form.dates.estimated_delivery_date,
         invoice_document: form.invoice_document,
+        invoice_document_name: form.invoice_document_name,
         estimated_shipping_cost: parseFloat(form.estimated_shipping_cost),
         driver_name: "",
         location: "",

@@ -56,6 +56,7 @@ function NewRequest() {
       estimated_delivery_date: "",
     },
     invoice_document: "",
+    invoice_document_name: "",
     estimated_shipping_cost: "",
   })
   const [modal, setModal] = useState([false, false])
@@ -432,11 +433,14 @@ function NewRequest() {
 
             <FileUploader
               name="invoice_document"
-              onChange={(xmlString) =>
-                setFormData((prev) => ({
+              onChange={({ xmlString, fileName }) =>
+                {
+                  // console.log(xmlString, fileName);
+                  setFormData((prev) => ({
                   ...prev,
                   invoice_document: xmlString,
-                }))
+                  invoice_document_name: fileName,
+                }))}
               }
               value={formData.invoice_document}
             />

@@ -96,7 +96,7 @@
 }
 
 #origin-and-destination p {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   font-weight: bold;
   font-family: var(--inter);
   color: var(--primary-color-darker);
@@ -106,7 +106,7 @@ section ul {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1.4rem;
 }
 
 section ul li {
@@ -120,11 +120,11 @@ section ul li span {
 #cargo-details > div {
   display: flex;
   gap: 6rem;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 #cargo-details ul {
-  gap: 1.6rem;
+  gap: 2rem;
 }
 
 #cargo-details > h4 {
@@ -182,18 +182,21 @@ section ul li span {
   background-color: var(--primary-color);
   gap: 1rem;
   align-items: center;
-  border-radius: 1rem;  
+  border-radius: 1rem;
   border: none;
   color: var(--white);
   font-weight: 600;
   font-size: 1.8rem;
   padding: 1rem 2rem;
-  transition: transform 200ms ease;
+  transition: transform 200ms ease, background-color 0.8s ease;
+  cursor: pointer;
 }
 
 #xml-document #tax-doc > button > img {
   width: 1.6rem;
   height: 1.6rem;
+  pointer-events: none;
+  background-color: transparent;
 }
 
 #xml-document #tax-doc > button:hover {
@@ -249,9 +252,16 @@ section ul li span {
   text-align: right;
 }
 
+#modal-btns {
+  display: flex;
+  justify-content: flex-end !important;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 2rem;
+}
+
 #cancel-btn {
   margin: 0.7rem 0;
-  float: right;
   margin-top: 2rem;
   padding: 1rem;
   background-color: #ff4343;
@@ -266,5 +276,24 @@ section ul li span {
 
 #cancel-btn:hover {
   background-color: #b62e2e;
+  box-shadow: var(--shadow-clearer);
+}
+
+#edit-btn {
+  margin: 0.7rem 0;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: var(--green-darker);
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.6rem;
+  color: var(--white);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 200ms ease, box-shadow 200ms ease;
+}
+
+#edit-btn:hover {
+  background-color: var(--green);
   box-shadow: var(--shadow-clearer);
 }

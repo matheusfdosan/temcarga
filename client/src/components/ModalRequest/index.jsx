@@ -32,6 +32,34 @@ function ModalRequest({ closeModal, id }) {
 
   const handleClose = () => {
     closeModal(false)
+    console.log(request)
+  }
+
+  const downloadXml = (
+    xmlString,
+    filename = `nota-fiscal-eletrônica-${id}.xml`
+  ) => {
+    const blob = new Blob([xmlString], {
+      type: "application/xml;charset=utf-8",
+    })
+    const url = URL.createObjectURL(blob)
+
+    const a = document.createElement("a")
+    a.href = url
+    a.download = filename
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+
+    URL.revokeObjectURL(url)
+  }
+
+  const downloadInvoice = ({ target }) => {
+    downloadXml(request.invoice_document, request.invoice_document_name)
+    target.style.backgroundColor = "var(--green)"
+    setTimeout(() => {
+      target.style.backgroundColor = "var(--primary-color)"
+    }, 3000)
   }
 
   return (
@@ -172,13 +200,13 @@ function ModalRequest({ closeModal, id }) {
             <div>
               <h4>Data de Coleta:</h4>
               <p>
-                <span>{"15/05/2023"}</span>
+                <span>{new Date(request.collect_date).toLocaleDateString("pt-BR")}</span>
               </p>
             </div>
             <div>
               <h4>Data de Estimada de Entrega:</h4>
               <p>
-                <span>{"20/05/2023"}</span>
+                <span>{new Date(request.estimated_delivery_date).toLocaleDateString("pt-BR")}</span>
               </p>
             </div>
           </div>
@@ -192,10 +220,10 @@ function ModalRequest({ closeModal, id }) {
           <div id="tax-doc">
             <div>
               <img src={nfeIcon} alt="nfe icon" />
-              <span>Nota Fiscal Eletrônica</span>
+              <span>{request.invoice_document_name}</span>
             </div>
 
-            <button>
+            <button onClick={downloadInvoice}>
               <img src={downloadIcon} alt="download icon" />
               Baixar
             </button>
@@ -236,7 +264,10 @@ function ModalRequest({ closeModal, id }) {
           </div>
         </section>
 
-        <button id="cancel-btn">Cancelar</button>
+        <div id="modal-btns">
+          <button id="edit-btn">Editar Solicitação</button>
+          <button id="cancel-btn">Cancelar Solicitação</button>
+        </div>
       </div>
     </div>
   )

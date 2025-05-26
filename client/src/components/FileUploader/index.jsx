@@ -8,15 +8,17 @@ function FileUploader({ name, value, onChange, error }) {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0]
-    setFileName(selectedFile.name)
+
     if (selectedFile) {
       const reader = new FileReader()
       reader.onload = (event) => {
+        setFileName(selectedFile.name)
         const xmlString = event.target.result
-        onChange(xmlString)
+        onChange({ xmlString, fileName: selectedFile.name })
       }
       reader.readAsText(selectedFile)
     }
+
   }
 
   const handleDrop = (e) => {
@@ -27,8 +29,9 @@ function FileUploader({ name, value, onChange, error }) {
     if (droppedFile) {
       const reader = new FileReader()
       reader.onload = (event) => {
+        setFileName(droppedFile.name)
         const xmlString = event.target.result
-        onChange(xmlString)
+        onChange({ xmlString, fileName: droppedFile.name })
       }
       reader.readAsText(droppedFile)
       e.dataTransfer.clearData()
