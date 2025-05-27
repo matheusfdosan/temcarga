@@ -13,23 +13,29 @@ function Home() {
     id: null,
     name: "",
   })
-  const [firstRequests, setFirstRequests] = useState([])
+  const [lastRequests, setLastRequests] = useState(null)
+
+  const getRequestsFunc = async (id) => {
+    return await getRequests(id)
+  }
 
   useEffect(() => {
     const acess = JSON.parse(localStorage.getItem("login"))
-    setClient({ id: acess.auth.id, name: acess.auth.name })
+    setClient({
+      id: acess?.auth?.id || null,
+      name: acess?.auth?.name || "",
+    })
+  }, [])
 
+  useEffect(() => {
     const fetchRequests = async () => {
-      const result = await getRequestsFunc()
-      setFirstRequests(result[0])
+      if (!client.id) return
+      const result = await getRequestsFunc(client.id)
+      setLastRequests(result)
     }
 
     fetchRequests()
-  })
-
-  const getRequestsFunc = async () => {
-    return await getRequests(client.id)
-  }
+  }, [client.id])
 
   return (
     <div id="home">
@@ -69,16 +75,18 @@ function Home() {
 
       <h3>Última Solicitação</h3>
 
-      <Request
-        id={firstRequests.id}
-        status={firstRequests.status}
-        local={{
-          origin: firstRequests.origin_city,
-          destination: firstRequests.destination_city,
-        }}
-        type={firstRequests.type}
-        value={firstRequests.estimated_shipping_cost}
-      />
+      {lastRequests ? (
+        <Request
+          id={lastRequests.id}
+          status={lastRequests.status}
+          local={{
+            origin: lastRequests.origin_city,
+            destination: lastRequests.destination_city,
+          }}
+          type={lastRequests.type}
+          value={lastRequests.estimated_shipping_cost}
+        />
+      ) : <p>Nada aqui</p>}
     </div>
   )
 }
