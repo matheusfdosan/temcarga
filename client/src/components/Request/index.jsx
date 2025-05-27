@@ -14,7 +14,7 @@ import loopIcon from "../../assets/loop-icon.svg"
 
 import ModalRequest from "../ModalRequest"
 
-function Request({ id, status, local, type, value, driver }) {
+function Request({ id, status, local, type, value }) {
   const [modal, setModal] = useState(false)
 
   const handleSeeDetails = () => {
@@ -95,9 +95,9 @@ function Request({ id, status, local, type, value, driver }) {
           <>
             <div id="line"></div>
             <div id="driver">
-              <img src={driver.img} alt={driver.name} />
+              {/* <img src={driver.img} alt={driver.name} /> */}
               <div>
-                <p>{driver.name}</p>
+                {/* <p>{driver.name}</p> */}
                 <span>Motorista</span>
               </div>
             </div>

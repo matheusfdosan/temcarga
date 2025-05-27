@@ -15,6 +15,7 @@ import SucessIcon from "../../assets/check-circle.gif"
 import FailIcon from "../../assets/error.gif"
 
 import FileUploader from "../FileUploader"
+import Loading from "../Loading"
 
 function NewRequest() {
   const [msg, setMsg] = useState("")
@@ -38,11 +39,6 @@ function NewRequest() {
       type: "",
       weight: "",
       numAxles: "",
-      size: {
-        length: "",
-        width: "",
-        height: "",
-      },
       features: {
         perishable: false,
         fragile: false,
@@ -58,8 +54,10 @@ function NewRequest() {
     invoice_document: "",
     invoice_document_name: "",
     estimated_shipping_cost: "",
+    distance: "",
   })
   const [modal, setModal] = useState([false, false])
+  const [loading, setLoading] = useState(false)
 
   const handleChange = ({ target }) => {
     const { name, value, type, checked } = target
@@ -83,14 +81,17 @@ function NewRequest() {
   const handleCalculateFreight = async () => {
     try {
       const numAxles = Number(formData.load_description.numAxles) || 2
-      const totalCost = await calculateMinFreight(formData, numAxles)
+      const calculate = await calculateMinFreight(formData, numAxles)
       setFormData((prev) => ({
         ...prev,
-        estimated_shipping_cost: String(totalCost),
+        estimated_shipping_cost: String(calculate.totalCost),
+        distance: String(calculate.distance),
       }))
       setIsAllRight(true)
       setMsg("")
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       console.error("Erro ao calcular o frete:", error.message)
       setFormData((prev) => ({
         ...prev,
@@ -103,10 +104,12 @@ function NewRequest() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
 
     if (Object.keys(formData.invoice_document).length === 0) {
       setMsg("Você precisa adicionar um arquivo XML da nota fiscal.")
       setIsAllRight(false)
+      setLoading(false)
       return
     }
 
@@ -316,30 +319,6 @@ function NewRequest() {
                 type="measure"
               />
 
-              <div id="load-size">
-                <Input
-                  name="load_description.size.length"
-                  value={formData.load_description.size.length}
-                  onChange={handleChange}
-                  label={"Comprimento (cm)"}
-                  type="measure"
-                />
-                <Input
-                  name="load_description.size.width"
-                  value={formData.load_description.size.width}
-                  onChange={handleChange}
-                  label={"Largura (cm)"}
-                  type="measure"
-                />
-                <Input
-                  name="load_description.size.height"
-                  value={formData.load_description.size.height}
-                  onChange={handleChange}
-                  label={"Altura (cm)"}
-                  type="measure"
-                />
-              </div>
-
               <Input
                 name="load_description.numAxles"
                 value={formData.load_description.numAxles}
@@ -389,7 +368,8 @@ function NewRequest() {
                 value={formData.load_description.goods_value}
                 onChange={handleChange}
                 label={"Valor da Mercadoria (R$)"}
-                type="measure"
+                placeholder={"2500"}
+                type="money"
               />
               <Input
                 name="load_description.additional_observations"
@@ -433,15 +413,13 @@ function NewRequest() {
 
             <FileUploader
               name="invoice_document"
-              onChange={({ xmlString, fileName }) =>
-                {
-                  // console.log(xmlString, fileName);
-                  setFormData((prev) => ({
+              onChange={({ xmlString, fileName }) => {
+                setFormData((prev) => ({
                   ...prev,
                   invoice_document: xmlString,
                   invoice_document_name: fileName,
-                }))}
-              }
+                }))
+              }}
               value={formData.invoice_document}
             />
           </section>
@@ -499,6 +477,8 @@ function NewRequest() {
       ) : (
         <></>
       )}
+
+      {loading && <Loading />}
     </div>
   )
 }

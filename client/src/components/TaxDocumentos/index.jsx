@@ -52,7 +52,7 @@ function TaxDocuments() {
       </p>
 
       <ul>
-        {documents?.map((doc, index) => {
+        {documents.length !== 0 ? documents.map((doc, index) => {
           return (
             <li key={index}>
               <div>
@@ -74,7 +74,7 @@ function TaxDocuments() {
               </button>
             </li>
           )
-        })}
+        }): <li>Nenhum documento foi usado!</li>}
       </ul>
     </div>
   )

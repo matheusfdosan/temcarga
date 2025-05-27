@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import "./styles.css"
 import Request from "../Request"
+import getRequests from "../../utils/getRequests.js"
 
 import activeRequests from "../../assets/active-requests-icon.svg"
 import pendingRequests from "../../assets/pending-requests-icon.svg"
@@ -8,16 +9,31 @@ import completedRequests from "../../assets/completed-requests-icon.svg"
 import systemMessages from "../../assets/system-messages-icon.svg"
 
 function Home() {
-  const [name, setName] = useState("")
+  const [client, setClient] = useState({
+    id: null,
+    name: "",
+  })
+  const [firstRequests, setFirstRequests] = useState([])
 
   useEffect(() => {
     const acess = JSON.parse(localStorage.getItem("login"))
-    setName(acess.auth.name)
+    setClient({ id: acess.auth.id, name: acess.auth.name })
+
+    const fetchRequests = async () => {
+      const result = await getRequestsFunc()
+      setFirstRequests(result[0])
+    }
+
+    fetchRequests()
   })
+
+  const getRequestsFunc = async () => {
+    return await getRequests(client.id)
+  }
 
   return (
     <div id="home">
-      <h2>Olá, {name}!</h2>
+      <h2>Olá, {client.name}!</h2>
       <p>Bem-vindo(a) de volta.</p>
 
       <div id="home-cards-container">
@@ -52,17 +68,16 @@ function Home() {
       </div>
 
       <h3>Última Solicitação</h3>
-      
+
       <Request
-        status={"in-progress"}
-        local={{ origin: "São Paulo, SP", destination: "Rio de Janeiro, RJ" }}
-        type={"eletrônicos"}
-        value={2500}
-        driver={{
-          name: "Daniel Rodrigues",
-          img: "https://media.istockphoto.com/id/1396633199/pt/foto/happy-truck-driver-looking-through-side-window-while-driving-his-truck.jpg?s=612x612&w=0&k=20&c=pIka2KPhH-UWkTrA0H6_qFZnJs-uRCIkFdCIJd-Exec=",
-          tracker: { lat: -23.664803341334487, long: -46.64695904003448 },
+        id={firstRequests.id}
+        status={firstRequests.status}
+        local={{
+          origin: firstRequests.origin_city,
+          destination: firstRequests.destination_city,
         }}
+        type={firstRequests.type}
+        value={firstRequests.estimated_shipping_cost}
       />
     </div>
   )

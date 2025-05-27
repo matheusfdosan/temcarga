@@ -35,10 +35,6 @@ function YourRequests() {
               <option value="Cancelada">Cancelada</option>
             </select>
           </label>
-          <label htmlFor="input-date">
-            <h3>Data</h3>
-            <input type="date" name="input-date" id="input-date" />
-          </label>
           <label htmlFor="input-local">
             <h3>Cidade/UF</h3>
             <input
@@ -59,7 +55,7 @@ function YourRequests() {
       <div id="horizontal-line"></div>
 
       <div id="requests-container">
-        {requests?.map((request, index) => (
+        {requests.length !== 0 ? requests.map((request, index) => (
           <Request
             key={index}
             id={request.id}
@@ -71,7 +67,7 @@ function YourRequests() {
             type={request.type}
             value={request.estimated_shipping_cost}
           />
-        ))}
+        )) : <p id="no-requests">Você não fez nenhuma solicitação!</p>}
       </div>
     </div>
   )

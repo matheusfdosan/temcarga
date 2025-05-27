@@ -32,7 +32,6 @@ function ModalRequest({ closeModal, id }) {
 
   const handleClose = () => {
     closeModal(false)
-    console.log(request)
   }
 
   const downloadXml = (
@@ -122,11 +121,16 @@ function ModalRequest({ closeModal, id }) {
               </ul>
             </div>
           </div>
+
+          <p id="distance">
+            <strong>Distância: </strong>{" "}
+            {parseFloat(request.distance).toFixed(3)} km
+          </p>
         </section>
 
         <section id="cargo-details">
           <h3>
-            <img src={blueBoxIcon} alt="" />
+            <img src={blueBoxIcon} alt="tax document icon" />
             Detalhes da Carga
           </h3>
 
@@ -137,13 +141,6 @@ function ModalRequest({ closeModal, id }) {
               </li>
               <li>
                 Peso: <span>{request.weight + "kg"}</span>
-              </li>
-              <li>
-                Dimensões:{" "}
-                <span>
-                  {`${request.length} x ${request.width} x ${request.height}`}{" "}
-                  cm
-                </span>
               </li>
             </ul>
             <ul>
@@ -164,12 +161,16 @@ function ModalRequest({ closeModal, id }) {
           </div>
 
           <h4>Observações:</h4>
-          <p>{request.additional_observations}</p>
+          <p>
+            {request?.additional_observations === ""
+              ? request?.additional_observations
+              : "Nenhuma observação adicionada!"}
+          </p>
         </section>
 
         <section id="special-features">
           <h3>
-            <img src={starIcon} alt="" />
+            <img src={starIcon} alt="star icon" />
             Características Especiais
           </h3>
 
@@ -200,20 +201,26 @@ function ModalRequest({ closeModal, id }) {
             <div>
               <h4>Data de Coleta:</h4>
               <p>
-                <span>{new Date(request.collect_date).toLocaleDateString("pt-BR")}</span>
+                <span>
+                  {new Date(request.collect_date).toLocaleDateString("pt-BR")}
+                </span>
               </p>
             </div>
             <div>
               <h4>Data de Estimada de Entrega:</h4>
               <p>
-                <span>{new Date(request.estimated_delivery_date).toLocaleDateString("pt-BR")}</span>
+                <span>
+                  {new Date(request.estimated_delivery_date).toLocaleDateString(
+                    "pt-BR"
+                  )}
+                </span>
               </p>
             </div>
           </div>
         </section>
         <section id="xml-document">
           <h3>
-            <img src={taxDocsIcon} alt="" />
+            <img src={taxDocsIcon} alt="tax document icon" />
             Documento XML
           </h3>
 

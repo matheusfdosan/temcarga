@@ -297,3 +297,8 @@ section ul li span {
   background-color: var(--green);
   box-shadow: var(--shadow-clearer);
 }
+
+#modal-request #distance {
+  margin-top: 2rem;
+  font-size: 1.8rem;
+}

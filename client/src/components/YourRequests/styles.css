@@ -92,3 +92,7 @@
   flex-direction: column;
   gap: 3rem;
 }
+
+#no-requests {
+  text-align: center;
+}

@@ -10,7 +10,7 @@ function Input({
   selectList = [],
   value,
   inputRef,
-  onChange,
+  onChange = () => {},
   name,
   desc,
 }) {
@@ -18,10 +18,17 @@ function Input({
   const inputId = label.replace(/\s+/g, "-").toLowerCase()
   const inputName = name || inputId
 
-  const handleMaskedChange = (val) => {
+  const handleMaskedChangeNumber = (val) => {
+    const cleanValue = val.replace(/\./g, "").replace(",", ".")
+    const numberValue = parseFloat(cleanValue)
+  
+    onChange({ target: { name: inputName, value: numberValue } })
+  }
+  
+  const handleMaskedChangeString = (val) => {
     onChange({ target: { name: inputName, value: val } })
   }
-
+  
   return (
     <>
       {type === "password" ? (
@@ -77,8 +84,14 @@ function Input({
             minLength={9}
             name={inputName}
             placeholder="00000-000"
-            value={value}
-            onAccept={handleMaskedChange}
+            value={typeof value === "string" ? value.toString() : value || ""}
+            onAccept={(val) =>
+              onChange({
+                target: {
+                  name: inputName,
+                  value: val,
+                },
+              })}
           />
         </label>
       ) : type === "textbox" ? (
@@ -108,7 +121,7 @@ function Input({
           />
           <span>{label}</span>
         </label>
-      ) : type === "measure" ? (
+      ) : type === "money" ? (
         <label className="form-input" htmlFor={inputId}>
           <span>{label}</span>
           <IMaskInput
@@ -118,11 +131,30 @@ function Input({
             ref={inputRef}
             radix=","
             mapToRadix={["."]}
+            placeholder="2500 (sem os centavos)"
             id={inputId}
             name={inputName}
-            value={value}
+            value={typeof value === "number" ? value.toString() : value || ""}
             required
-            onAccept={handleMaskedChange}
+            onAccept={handleMaskedChangeNumber}
+          />
+        </label>
+      ) : type === "measure" ? (
+        <label className="form-input" htmlFor={inputId}>
+          <span>{label}</span>
+          <IMaskInput
+            mask={Number}
+            scale={2}          
+            thousandsSeparator="."
+            ref={inputRef}
+            radix=","
+            placeholder="2650"
+            mapToRadix={["."]}
+            id={inputId}
+            name={inputName}
+            value={typeof value === "number" ? value.toString() : value || ""}
+            required
+            onAccept={handleMaskedChangeNumber}
           />
         </label>
       ) : type === "email" ? (
@@ -170,8 +202,8 @@ function Input({
             placeholder="(00) 00000-0000"
             required
             ref={inputRef}
-            value={value}
-            onAccept={handleMaskedChange}
+            value={typeof value === "number" ? value.toString() : value || ""}
+            onAccept={handleMaskedChangeString}
           />
         </label>
       ) : label === "CPF ou CNPJ*" ? (
@@ -184,8 +216,8 @@ function Input({
             placeholder="Digite seu CPF ou CNPJ"
             ref={inputRef}
             required
-            value={value}
-            onAccept={handleMaskedChange}
+            value={typeof value === "number" ? value.toString() : value || ""}
+            onAccept={handleMaskedChangeString}
           />
         </label>
       ) : (
