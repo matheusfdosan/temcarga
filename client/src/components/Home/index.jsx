@@ -8,34 +8,39 @@ import pendingRequests from "../../assets/pending-requests-icon.svg"
 import completedRequests from "../../assets/completed-requests-icon.svg"
 import systemMessages from "../../assets/system-messages-icon.svg"
 
+import { useNavigation } from "../../contexts/NavigationContext"
+
 function Home() {
+  const { setActive } = useNavigation()
+
   const [client, setClient] = useState({
     id: null,
     name: "",
   })
-  const [lastRequests, setLastRequests] = useState(null)
-
-  const getRequestsFunc = async (id) => {
-    return await getRequests(id)
-  }
+  const [requests, setRequests] = useState([])
 
   useEffect(() => {
     const acess = JSON.parse(localStorage.getItem("login"))
-    setClient({
-      id: acess?.auth?.id || null,
-      name: acess?.auth?.name || "",
-    })
+
+    if (acess?.auth) {
+      setClient({
+        id: acess.auth.id,
+        name: acess.auth.name,
+      })
+    }
   }, [])
 
   useEffect(() => {
     const fetchRequests = async () => {
       if (!client.id) return
-      const result = await getRequestsFunc(client.id)
-      setLastRequests(result)
+      const result = await getRequests(client.id)
+      setRequests(result || [])
     }
 
     fetchRequests()
   }, [client.id])
+
+  const lastRequest = requests.length > 0 ? requests[requests.length - 1] : null
 
   return (
     <div id="home">
@@ -43,24 +48,42 @@ function Home() {
       <p>Bem-vindo(a) de volta.</p>
 
       <div id="home-cards-container">
-        <div className="card" id="active-requests">
+        <div
+          className="card"
+          id="active-requests"
+          onClick={() => setActive("your-requests")}
+        >
           <div className="main-info">
             <h3>Solicitações Ativas</h3>
-            <span>{0}</span>
+            <span>
+              {requests.filter((reqs) => reqs.status === "pending").length}
+            </span>
           </div>
           <img src={activeRequests} alt="active-requests" />
         </div>
-        <div className="card" id="pending-requests">
+        <div
+          className="card"
+          id="pending-requests"
+          onClick={() => setActive("your-requests")}
+        >
           <div className="main-info">
-            <h3>Solicitações Pendentes</h3>
-            <span>{0}</span>
+            <h3>Solicitações em andamento</h3>
+            <span>
+              {requests.filter((reqs) => reqs.status === "in-progress").length}
+            </span>
           </div>
           <img src={pendingRequests} alt="" />
         </div>
-        <div className="card" id="completed-requests">
+        <div
+          className="card"
+          id="completed-requests"
+          onClick={() => setActive("your-requests")}
+        >
           <div className="main-info">
             <h3>Solicitações Finalizadas</h3>
-            <span>{0}</span>
+            <span>
+              {requests.filter((reqs) => reqs.status === "completed").length}
+            </span>
           </div>
           <img src={completedRequests} alt="completed-requests" />
         </div>
@@ -75,18 +98,20 @@ function Home() {
 
       <h3>Última Solicitação</h3>
 
-      {lastRequests ? (
+      {lastRequest ? (
         <Request
-          id={lastRequests.id}
-          status={lastRequests.status}
+          id={lastRequest.id}
+          status={lastRequest.status}
           local={{
-            origin: lastRequests.origin_city,
-            destination: lastRequests.destination_city,
+            origin: lastRequest.origin_city,
+            destination: lastRequest.destination_city,
           }}
-          type={lastRequests.type}
-          value={lastRequests.estimated_shipping_cost}
+          type={lastRequest.type}
+          value={lastRequest.estimated_shipping_cost}
         />
-      ) : <p>Nada aqui</p>}
+      ) : (
+        <p>Nada aqui! 😒</p>
+      )}
     </div>
   )
 }
