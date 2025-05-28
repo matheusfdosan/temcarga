@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useNavigation } from "../../contexts/NavigationContext";
+import { useNavigation } from "../../contexts/NavigationContext"
 import "./styles.css"
 
 import "leaflet/dist/leaflet.css"
@@ -44,7 +44,7 @@ function FollowDriver({ position }) {
 }
 
 function ModalRequest({ closeModal, id }) {
-    const { setActive } = useNavigation();
+  const { setActive } = useNavigation()
 
   const [request, setRequest] = useState([])
   const [driverLocation, setDriverLocation] = useState({
@@ -285,7 +285,7 @@ function ModalRequest({ closeModal, id }) {
           </div>
         </section>
 
-        {request.driver_id && (
+        {request.driver_id && request.status === "in-progress" && (
           <section id="driver-sec">
             <h3>
               <img src={mapIcon} alt="status icon" />
@@ -329,7 +329,7 @@ function ModalRequest({ closeModal, id }) {
                   : request.status == "in-progress"
                   ? "Em Andamento"
                   : request.status == "completed"
-                  ? "Finalizado"
+                  ? "Concluído"
                   : "Cancelado"}
               </p>
             </div>
@@ -356,8 +356,14 @@ function ModalRequest({ closeModal, id }) {
               Editar Solicitação
             </button>
           )}
-          <button id="cancel-btn">
-            <img src={whiteCrossIcon} alt="cancel" />Cancelar Solicitação</button>
+          {request.status !== "completed" && request.status !== "canceled" ? (
+            <button id="cancel-btn">
+              <img src={whiteCrossIcon} alt="cancel" />
+              Cancelar Solicitação
+            </button>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>
