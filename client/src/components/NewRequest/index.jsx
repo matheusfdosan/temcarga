@@ -73,6 +73,7 @@ function NewRequest() {
   useEffect(() => {
     const loadData = async () => {
       let parsedData
+      let isItReallyRepeating = false
 
       const repeatRequest = JSON.parse(localStorage.getItem("repeatRequest"))
       const editingNow = JSON.parse(localStorage.getItem("editingNow"))
@@ -85,6 +86,7 @@ function NewRequest() {
       if (repeatRequest) {
         const clientId = JSON.parse(localStorage.getItem("login")).auth.id
         parsedData = await getRequestsFunc(clientId, repeatRequest)
+        isItReallyRepeating = true
         setIsRepiting(true)
       }
 
@@ -119,13 +121,15 @@ function NewRequest() {
             additional_observations: parsedData.additional_observations || "",
           },
           dates: {
-            collect_date:
-              parsedData.collect_date?.replace("T00:00:00.000Z", "") || "",
-            estimated_delivery_date:
-              parsedData.estimated_delivery_date?.replace(
-                "T00:00:00.000Z",
-                ""
-              ) || "",
+            collect_date: isItReallyRepeating
+              ? ""
+              : parsedData.collect_date?.replace("T00:00:00.000Z", "") || "",
+            estimated_delivery_date: isItReallyRepeating
+              ? ""
+              : parsedData.estimated_delivery_date?.replace(
+                  "T00:00:00.000Z",
+                  ""
+                ) || "",
           },
           invoice_document: parsedData.invoice_document || "",
           invoice_document_name: parsedData.invoice_document_name || "",
