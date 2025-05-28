@@ -39,6 +39,7 @@ function NewRequest() {
       type: "",
       weight: "",
       numAxles: "",
+      truckType: "",
       features: {
         perishable: false,
         fragile: false,
@@ -317,6 +318,19 @@ function NewRequest() {
                 onChange={handleChange}
                 label={"Peso da Carga (kg)"}
                 type="measure"
+              />
+
+              <Input
+                name="load_description.truckType"
+                value={formData.load_description.truckType}
+                onChange={handleChange}
+                label={"Escolha o tipo do caminhão"}
+                type="select"
+                selectList={[
+                  "Caçamba",
+                  "Baú",
+                  "Carroceria Aberta"
+                ]}
               />
 
               <Input
