@@ -7,6 +7,7 @@ const newRequest = require("../routes/newRequest.js")
 const userRequests = require("../routes/userRequests.js")
 const oneRequest = require("../routes/oneRequest.js")
 const userDocuments = require("../routes/getDocuments.js")
+const editRequest = require("../routes/editRequest.js")
 
 async function allRoutes(server) {
   server.register(login)
@@ -16,6 +17,7 @@ async function allRoutes(server) {
   server.register(userRequests)
   server.register(oneRequest)
   server.register(userDocuments)
+  server.register(editRequest)
 }
 
 module.exports = fastifyPlugin(allRoutes)

@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react"
 import "./styles.css"
 import uploadIcon from "../../assets/upload-icon.svg"
 
-function FileUploader({ name, value, onChange, error }) {
+function FileUploader({ name, value, docName, onChange, error }) {
   const fileInput = useRef()
   const [fileName, setFileName] = useState("")
 
@@ -18,7 +18,6 @@ function FileUploader({ name, value, onChange, error }) {
       }
       reader.readAsText(selectedFile)
     }
-
   }
 
   const handleDrop = (e) => {
@@ -72,7 +71,9 @@ function FileUploader({ name, value, onChange, error }) {
           onChange={handleFileChange}
         />
 
-        <button type="button">{value ? fileName : "Selecionar arquivo"}</button>
+        <button type="button">
+          {value ? fileName || docName : "Selecionar arquivo"}
+        </button>
 
         <p>Tamanho máximo 10MB</p>
       </div>

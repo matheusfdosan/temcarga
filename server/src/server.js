@@ -1,4 +1,7 @@
-const server = require("fastify")({ logger: true })
+const server = require("fastify")({
+  logger: true,
+  bodyLimit: 10 * 1024 * 1024, // 10 MB
+})
 const { PORT } = require("../envVariables.js")
 const jwt = require("./configs/jwt.js")
 const cors = require("./configs/cors.js")

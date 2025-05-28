@@ -1,34 +1,82 @@
 import React, { useEffect, useState } from "react"
+import { useNavigation } from "../../contexts/NavigationContext";
 import "./styles.css"
 
+import "leaflet/dist/leaflet.css"
+import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet"
+
+import truckIcon from "../../assets/HowItWorksIcons/step2-icon.svg"
+import mapIcon from "../../assets/HowItWorksIcons/step5-icon.svg"
 import blueBoxIcon from "../../assets/blue-box-icon.svg"
 import blueMarker from "../../assets/blue-marker.svg"
-import dateIcon from "../../assets/date-icon.svg"
-import taxDocsIcon from "../../assets/tax-docs-icon.svg"
-import statusIcon from "../../assets/status-icon.svg"
 import crossIcon from "../../assets/cross-icon.svg"
-import starIcon from "../../assets/star-icon.svg"
-import truckIcon from "../../assets/HowItWorksIcons/step2-icon.svg"
-import nfeIcon from "../../assets/nfe-icon.svg"
+import whiteCrossIcon from "../../assets/white-cross-icon.svg"
+import dateIcon from "../../assets/date-icon.svg"
+import editIcon from "../../assets/edit-icon.svg"
 import downloadIcon from "../../assets/download-icon-two.svg"
+import nfeIcon from "../../assets/nfe-icon.svg"
+import betterBlueMarker from "../../assets/better-blue-marker.svg"
+import starIcon from "../../assets/star-icon.svg"
+import statusIcon from "../../assets/status-icon.svg"
+import taxDocsIcon from "../../assets/tax-docs-icon.svg"
+import L from "leaflet"
 
+const truckMarkerIcon = L.icon({
+  iconUrl: betterBlueMarker,
+  iconSize: [26, 26],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -32],
+})
+
+import getDriver from "../../utils/getDriver.js"
 import getOneRequest from "../../utils/getOneRequest.js"
 
-function ModalRequest({ closeModal, id }) {
-  const [request, setRequest] = useState([])
+function FollowDriver({ position }) {
+  const map = useMap()
 
-  const getRequestsFunc = async () => {
-    return await getOneRequest(id)
-  }
+  useEffect(() => {
+    if (position.lat && position.long) {
+      map.setView([position.lat, position.long])
+    }
+  }, [position, map])
+
+  return null
+}
+
+function ModalRequest({ closeModal, id }) {
+    const { setActive } = useNavigation();
+
+  const [request, setRequest] = useState([])
+  const [driverLocation, setDriverLocation] = useState({
+    lat: null,
+    long: null,
+  })
 
   useEffect(() => {
     const fetchRequest = async () => {
-      const result = await getRequestsFunc()
+      const result = await getOneRequest(id)
       setRequest(result[0])
     }
 
     fetchRequest()
+
+    const fetchDriver = async () => {
+      const result = await getDriver(request.driver_id)
+      setDriverLocation({
+        lat: result.lat,
+        long: result.lng,
+      })
+    }
+
+    const interval = setInterval(fetchDriver, 5 * 1000)
+    // const interval = setInterval(fetchDriver, 5 * 60 * 1000)
+    return () => clearInterval(interval)
   }, [])
+
+  const handleEdit = () => {
+    localStorage.setItem("editingNow", JSON.stringify(request))
+    setActive("new-request")
+  }
 
   const handleClose = () => {
     closeModal(false)
@@ -90,9 +138,9 @@ function ModalRequest({ closeModal, id }) {
               <p>Origem:</p>
               <ul>
                 <li>
-                  Cidade/Estado:{" "}
                   <span>
-                    {request.origin_city} - {request.origin_state}
+                    Cidade/Estado: {request.origin_city} -{" "}
+                    {request.origin_state}
                   </span>
                 </li>
                 <li>
@@ -162,8 +210,8 @@ function ModalRequest({ closeModal, id }) {
 
           <h4>Observações:</h4>
           <p>
-            {request?.additional_observations === ""
-              ? request?.additional_observations
+            {request.additional_observations !== ""
+              ? request.additional_observations
               : "Nenhuma observação adicionada!"}
           </p>
         </section>
@@ -236,6 +284,36 @@ function ModalRequest({ closeModal, id }) {
             </button>
           </div>
         </section>
+
+        {request.driver_id && (
+          <section id="driver-sec">
+            <h3>
+              <img src={mapIcon} alt="status icon" />
+              Localização do caminhoneiro
+            </h3>
+
+            {driverLocation.lat && driverLocation.long && (
+              <MapContainer
+                center={[driverLocation.lat, driverLocation.long]}
+                zoom={15}
+                style={{
+                  height: "30rem",
+                  width: "80%",
+                  margin: "2rem auto",
+                  border: ".2rem solid var(--primary-color)",
+                }}
+              >
+                <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
+                <FollowDriver position={driverLocation} />
+                <Marker
+                  position={[driverLocation.lat, driverLocation.long]}
+                  icon={truckMarkerIcon}
+                ></Marker>
+              </MapContainer>
+            )}
+          </section>
+        )}
+
         <section id="status">
           <h3>
             <img src={statusIcon} alt="status icon" />
@@ -248,7 +326,7 @@ function ModalRequest({ closeModal, id }) {
               <p className={"status " + request.status}>
                 {request.status == "pending"
                   ? "Pendente"
-                  : request.status == "in-progrees"
+                  : request.status == "in-progress"
                   ? "Em Andamento"
                   : request.status == "completed"
                   ? "Finalizado"
@@ -272,8 +350,14 @@ function ModalRequest({ closeModal, id }) {
         </section>
 
         <div id="modal-btns">
-          <button id="edit-btn">Editar Solicitação</button>
-          <button id="cancel-btn">Cancelar Solicitação</button>
+          {request.status === "pending" && (
+            <button id="edit-btn" onClick={handleEdit}>
+              <img src={editIcon} alt="edit" />
+              Editar Solicitação
+            </button>
+          )}
+          <button id="cancel-btn">
+            <img src={whiteCrossIcon} alt="cancel" />Cancelar Solicitação</button>
         </div>
       </div>
     </div>

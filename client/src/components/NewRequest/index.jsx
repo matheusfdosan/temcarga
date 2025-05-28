@@ -1,26 +1,29 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import "./styles.css"
 
 import calculateMinFreight from "../../utils/calculateMinFreight.js"
 import newRequestService from "../../utils/newRequestService.js"
-
-import Input from "../Input"
+import editRequestService from "../../utils/editRequestService.js"
+import getRequests from "../../utils/getRequests.js"
 
 import blueBoxIcon from "../../assets/blue-box-icon.svg"
 import blueMarker from "../../assets/blue-marker.svg"
 import confirmIcon from "../../assets/confirm-icon.svg"
 import dateIcon from "../../assets/date-icon.svg"
+import editIcon from "../../assets/edit-icon.svg"
 import taxDocsIcon from "../../assets/tax-docs-icon.svg"
 import SucessIcon from "../../assets/check-circle.gif"
 import FailIcon from "../../assets/error.gif"
 
 import FileUploader from "../FileUploader"
+import Input from "../Input"
 import Loading from "../Loading"
 
 function NewRequest() {
   const [msg, setMsg] = useState("")
   const [isAllRight, setIsAllRight] = useState(false)
   const [formData, setFormData] = useState({
+    id: null,
     location: {
       origin: {
         cep: "",
@@ -59,6 +62,81 @@ function NewRequest() {
   })
   const [modal, setModal] = useState([false, false])
   const [loading, setLoading] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  const [isRepiting, setIsRepiting] = useState(false)
+
+  const getRequestsFunc = async (clientId, requestId) => {
+    const result = await getRequests(clientId)
+    return result.filter((r) => r.id === requestId)[0]
+  }
+
+  useEffect(() => {
+    const loadData = async () => {
+      let parsedData
+
+      const repeatRequest = JSON.parse(localStorage.getItem("repeatRequest"))
+      const editingNow = JSON.parse(localStorage.getItem("editingNow"))
+
+      if (editingNow) {
+        setIsEditing(true)
+        parsedData = editingNow
+      }
+
+      if (repeatRequest) {
+        const clientId = JSON.parse(localStorage.getItem("login")).auth.id
+        parsedData = await getRequestsFunc(clientId, repeatRequest)
+        setIsRepiting(true)
+      }
+
+      if (parsedData) {
+        setFormData({
+          id: parsedData.id,
+          location: {
+            origin: {
+              cep: parsedData.origin_cep || "",
+              city: parsedData.origin_city || "",
+              state: parsedData.origin_state || "",
+              complete_address: parsedData.origin_complete_address || "",
+            },
+            destination: {
+              cep: parsedData.destination_cep || "",
+              city: parsedData.destination_city || "",
+              state: parsedData.destination_state || "",
+              complete_address: parsedData.destination_complete_address || "",
+            },
+          },
+          load_description: {
+            type: parsedData.type || "",
+            weight: parsedData.weight || "",
+            numAxles: parsedData.numaxles || "",
+            truckType: parsedData.trucktype || "",
+            features: {
+              perishable: parsedData.perishable || false,
+              fragile: parsedData.fragile || false,
+              insurance_included: parsedData.insurance_included || false,
+            },
+            goods_value: parsedData.goods_value || "",
+            additional_observations: parsedData.additional_observations || "",
+          },
+          dates: {
+            collect_date:
+              parsedData.collect_date?.replace("T00:00:00.000Z", "") || "",
+            estimated_delivery_date:
+              parsedData.estimated_delivery_date?.replace(
+                "T00:00:00.000Z",
+                ""
+              ) || "",
+          },
+          invoice_document: parsedData.invoice_document || "",
+          invoice_document_name: parsedData.invoice_document_name || "",
+          estimated_shipping_cost: parsedData.estimated_shipping_cost || "",
+          distance: parsedData.distance || "",
+        })
+      }
+    }
+
+    loadData()
+  }, [])
 
   const handleChange = ({ target }) => {
     const { name, value, type, checked } = target
@@ -89,8 +167,8 @@ function NewRequest() {
         distance: String(calculate.distance),
       }))
       setIsAllRight(true)
+      return true
       setMsg("")
-      setLoading(false)
     } catch (error) {
       setLoading(false)
       console.error("Erro ao calcular o frete:", error.message)
@@ -100,6 +178,9 @@ function NewRequest() {
       }))
       setMsg("Preencha todas as informações acima!")
       setIsAllRight(false)
+      return false
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -117,20 +198,55 @@ function NewRequest() {
     handleCalculateFreight()
   }
 
-  const handleSendForm = async () => {
-    const response = await newRequestService(formData)
-    if (response) {
+  const handleEditForm = async () => {
+    try {
+      const response = await editRequestService(formData)
+
+      if (!response) {
+        setModal([true, false])
+        setTimeout(() => {
+          setModal([false, false])
+        }, 3000)
+        return
+      }
+
       setModal([true, true])
       setTimeout(() => {
         setModal([false, true])
         localStorage.setItem("currentSection", "your-requests")
         location.reload()
       }, 3000)
-    } else {
+    } catch (error) {
       setModal([true, false])
+      console.error("Erro ao editar:", error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleSendForm = async () => {
+    try {
+      const response = await newRequestService(formData)
+
+      if (!response) {
+        setModal([true, false])
+        setTimeout(() => {
+          setModal([false, false])
+        }, 3000)
+        return
+      }
+
+      setModal([true, true])
       setTimeout(() => {
-        setModal([false, false])
+        setModal([false, true])
+        localStorage.setItem("currentSection", "your-requests")
+        location.reload()
       }, 3000)
+    } catch (error) {
+      setModal([true, false])
+      console.error("Erro ao enviar:", error.message)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -326,11 +442,7 @@ function NewRequest() {
                 onChange={handleChange}
                 label={"Escolha o tipo do caminhão"}
                 type="select"
-                selectList={[
-                  "Caçamba",
-                  "Baú",
-                  "Carroceria Aberta"
-                ]}
+                selectList={["Caçamba", "Baú", "Carroceria Aberta"]}
               />
 
               <Input
@@ -435,6 +547,7 @@ function NewRequest() {
                 }))
               }}
               value={formData.invoice_document}
+              docName={formData.invoice_document_name}
             />
           </section>
         </div>
@@ -465,9 +578,31 @@ function NewRequest() {
             {msg && <p id="form-error">{msg}</p>}
             {isAllRight && (
               <div id="last-button">
-                <button id="confirm-form" onClick={handleSendForm}>
-                  <img src={confirmIcon} alt="confirm icon" /> Confirmar
-                  Solicitação
+                <button
+                  id="confirm-form"
+                  onClick={
+                    isEditing
+                      ? handleEditForm
+                      : isRepiting
+                      ? handleSendForm
+                      : handleSendForm
+                  }
+                >
+                  <img
+                    src={
+                      isEditing
+                        ? editIcon
+                        : isRepiting
+                        ? confirmIcon
+                        : confirmIcon
+                    }
+                    alt="confirm icon"
+                  />
+                  {isEditing
+                    ? "Confirmar Alterações"
+                    : isRepiting
+                    ? "Confirmar Solicitação"
+                    : "Confirmar Solicitação"}
                 </button>
               </div>
             )}

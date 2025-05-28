@@ -133,6 +133,8 @@
 
 #confirm-form {
   display: flex;
+  gap: 1rem;
+  align-items: center;
   background-color: var(--green-darker);
   color: var(--white);
   gap: 1rem;

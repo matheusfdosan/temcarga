@@ -13,9 +13,12 @@ import boxIcon from "../../assets/box-icon.svg"
 import loopIcon from "../../assets/loop-icon.svg"
 
 import ModalRequest from "../ModalRequest"
+import { useNavigation } from "../../contexts/NavigationContext"
 
 function Request({ id, status, local, type, value }) {
+  const { setActive } = useNavigation()
   const [modal, setModal] = useState(false)
+  const [driver, setDriver] = useState([])
 
   const handleSeeDetails = () => {
     setModal(true)
@@ -23,6 +26,16 @@ function Request({ id, status, local, type, value }) {
 
   const handleCloseModal = (closeModal) => {
     setModal(closeModal)
+  }
+
+  const handleGetDriverInfo = async (id) => {
+    // const info = await getDriver(id)
+    setDriver((prev) => ({ ...prev, name: "Markinhos" }))
+  }
+
+  const handleRepeatRequest = () => {
+    localStorage.setItem("repeatRequest", JSON.stringify(id))
+    setActive("new-request")
   }
 
   return (
@@ -91,24 +104,33 @@ function Request({ id, status, local, type, value }) {
             </span>
           </div>
         </div>
-        {status !== "pending" && (
+
+        {status !== "pending" && driver !== null ? (
           <>
             <div id="line"></div>
-            <div id="driver">
-              {/* <img src={driver.img} alt={driver.name} /> */}
+            <div id="driver" onLoad={handleGetDriverInfo}>
+              <img
+                src={"https://cdn-icons-png.flaticon.com/512/1535/1535791.png"}
+                alt={driver.name}
+              />
               <div>
-                {/* <p>{driver.name}</p> */}
+                <p>{driver.name}</p>
                 <span>Motorista</span>
               </div>
             </div>
+          </>
+        ) : (
+          <>
+            <div id="line"></div>
+            <p>🚛 Na espera de um motorista!</p>
           </>
         )}
       </div>
       <div id="card-footer">
         <button onClick={handleSeeDetails}>Ver Detalhes</button>
 
-        <button>
-          <img src={loopIcon} alt="loop-icon" />
+        <button onClick={handleRepeatRequest}>
+          <img src={loopIcon} alt="loop-icon"  />
           Repetir Solicitação
         </button>
       </div>
