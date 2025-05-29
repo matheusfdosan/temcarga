@@ -70,6 +70,7 @@ function YourRequests() {
             <h3>Status</h3>
             <select name="status" id="status" onChange={handleChange}>
               <option value="Todos">Todos</option>
+              <option value="accepted">Aceitos</option>
               <option value="in-progress">Em Andamento</option>
               <option value="pending">Pendente</option>
               <option value="completed">Concluída</option>
@@ -98,7 +99,7 @@ function YourRequests() {
       <div id="horizontal-line"></div>
 
       <div id="requests-container">
-        {filteredRequests.length !== 0 ? (
+        {filteredRequests?.length !== 0 ? (
           filteredRequests.map((request, index) => (
             <Request
               key={index}

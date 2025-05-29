@@ -162,7 +162,7 @@ section ul li span {
   border-radius: 0.5rem;
 }
 
-#xml-document #tax-doc {
+#xml-document .tax-doc {
   display: flex;
   justify-content: space-between;
   gap: 2rem;
@@ -172,13 +172,13 @@ section ul li span {
   border-radius: 0.5rem;
 }
 
-#xml-document #tax-doc > div {
+#xml-document .tax-doc > div {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-#xml-document #tax-doc > button {
+#xml-document .tax-doc > button {
   display: flex;
   background-color: var(--primary-color);
   gap: 1rem;
@@ -193,14 +193,14 @@ section ul li span {
   cursor: pointer;
 }
 
-#xml-document #tax-doc > button > img {
+#xml-document .tax-doc > button > img {
   width: 1.6rem;
   height: 1.6rem;
   pointer-events: none;
   background-color: transparent;
 }
 
-#xml-document #tax-doc > button:hover {
+#xml-document .tax-doc > button:hover {
   transform: scale(1.05);
 }
 
@@ -318,7 +318,7 @@ section ul li span {
 }
 
 @media (max-width: 830px) {
-  #tax-doc {
+  .tax-doc {
     justify-content: space-between;
     padding: 2rem;
     align-items: flex-start !important;

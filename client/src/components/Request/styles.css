@@ -18,6 +18,12 @@
   margin-bottom: 3rem;
 }
 
+.request-card > .container > .status > img {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+
 .request-card > .container > .status.pending {
   background-color: #ffc26138;
   color: #e28b00;
@@ -31,6 +37,11 @@
 .request-card > .container > .status.completed {
   background-color: #3b82f62b;
   color: #3196f8;
+}
+
+.request-card > .container > .status.accepted {
+  color: #9d8600;
+  background-color: #ffe761cd;
 }
 
 .request-card > .container > .status.canceled {

@@ -3,7 +3,7 @@ import axios from "axios"
 const loginService = async (form) => {
   try {
     const response = await axios.post(
-      "http://192.168.0.3:3000/login",
+      "http://localhost:3000/login",
       JSON.stringify({
         email: form.email,
         password: form.password,

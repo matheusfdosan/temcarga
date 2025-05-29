@@ -1,0 +1,98 @@
+#contract {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background-color: #00000067;
+}
+
+#contract form {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: var(--white);
+  border: 0.1rem solid var(--primary-color-clearer);
+}
+
+#contract form h3 {
+  margin-bottom: 2rem;
+  font-size: 2.2rem;
+  color: var(--primary-color-darker);
+}
+
+#contract form h4 {
+  margin-bottom: 2rem;
+}
+
+#contract strong {
+  color: var(--primary-color);
+}
+
+#contract a {
+  color: var(--primary-color-darker);
+}
+
+#contract form ul {
+  list-style: none;
+}
+
+#contract form ul li {
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+#contract form p {
+  margin-bottom: 1rem;
+}
+
+#contract form label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#check {
+  width: 1.8rem;
+  height: 1.8rem;
+  outline: none;
+  cursor: pointer;
+}
+
+label[for="check"] {
+  margin-bottom: 2rem;
+}
+
+#contract button {
+  padding: 1rem 2.5rem;
+  font-size: 1.6rem;
+  background-color: var(--black);
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 600;
+  color: var(--white);
+  cursor: pointer;
+  transition: color 200ms ease, background-color 200ms ease;
+}
+
+#contract button:disabled {
+  cursor: not-allowed;
+  background-color: var(--black-clearer);
+}
+
+#contract button[type="button"] {
+  margin-left: 2rem;
+  background-color: var(--white);
+  border: 0.3rem solid var(--black);
+  color: var(--blakc);
+}
+
+#contract button[type="button"]:hover {
+  background-color: var(--black);
+  color: var(--white);
+}

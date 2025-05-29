@@ -10,6 +10,7 @@ function Input({
   selectList = [],
   value,
   inputRef,
+  isRequired,
   onChange = () => {},
   name,
   desc,
@@ -110,6 +111,7 @@ function Input({
           <input
             type="checkbox"
             id={inputId}
+            required={isRequired}
             name={inputName}
             ref={inputRef}
             checked={value}

@@ -90,3 +90,24 @@
   color: var(--black-mid-clearer);
   font-size: 1.4rem;
 }
+
+#header-container > div > a {
+  position: relative;
+  cursor: pointer;
+}
+
+#point {
+  position: absolute;
+  top: -11px;
+  left: -8px;
+  background-color: var(--primary-color);
+  width: 2rem;
+  color: var(--white);
+  font-weight: bold;
+  height: 2rem;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

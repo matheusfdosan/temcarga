@@ -111,6 +111,7 @@
 
 #input-checkbox-label > span {
   font-size: 1.6rem;
+  flex: 1;
 }
 
 #input-textbox-label {

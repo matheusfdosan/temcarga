@@ -2,24 +2,34 @@ import React, { useEffect, useState } from "react"
 import "./styles.css"
 
 import calculateMinFreight from "../../utils/calculateMinFreight.js"
-import newRequestService from "../../utils/newRequestService.js"
 import editRequestService from "../../utils/editRequestService.js"
 import getRequests from "../../utils/getRequests.js"
+import newRequestService from "../../utils/newRequestService.js"
+import { supabase } from "../../utils/supabase.js"
 
 import blueBoxIcon from "../../assets/blue-box-icon.svg"
 import blueMarker from "../../assets/blue-marker.svg"
+import SucessIcon from "../../assets/check-circle.gif"
 import confirmIcon from "../../assets/confirm-icon.svg"
 import dateIcon from "../../assets/date-icon.svg"
 import editIcon from "../../assets/edit-icon.svg"
-import taxDocsIcon from "../../assets/tax-docs-icon.svg"
-import SucessIcon from "../../assets/check-circle.gif"
 import FailIcon from "../../assets/error.gif"
+import insuranceIcon from "../../assets/insurance-icon.svg"
+import taxDocsIcon from "../../assets/tax-docs-icon.svg"
 
 import FileUploader from "../FileUploader"
 import Input from "../Input"
 import Loading from "../Loading"
+import ModalConfirmPayment from "../ModalConfirmPayment/index.jsx"
+import ModalConfirm from "../ModalConfirm/index.jsx"
 
 function NewRequest() {
+  const [modalConfirm, setModalConfirm] = useState(false)
+  const [modalConfirmPayment, setModalConfirmPayment] = useState(false)
+  const [phase, setPhase] = useState(0)
+
+  const [understandTerms, setUnderstandTerms] = useState(false)
+  const [insurance, setInsurance] = useState(null)
   const [msg, setMsg] = useState("")
   const [isAllRight, setIsAllRight] = useState(false)
   const [formData, setFormData] = useState({
@@ -46,7 +56,6 @@ function NewRequest() {
       features: {
         perishable: false,
         fragile: false,
-        insurance_included: false,
       },
       goods_value: "",
       additional_observations: "",
@@ -57,6 +66,8 @@ function NewRequest() {
     },
     invoice_document: "",
     invoice_document_name: "",
+    insurance_document: null,
+    insurance_document_name: "",
     estimated_shipping_cost: "",
     distance: "",
   })
@@ -64,6 +75,15 @@ function NewRequest() {
   const [loading, setLoading] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [isRepiting, setIsRepiting] = useState(false)
+
+  const normalizeFileName = (name) => {
+    return name
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(".pdf", "")
+      .replace(/[^a-zA-Z0-9.\-_]/g, "")
+  }
 
   const getRequestsFunc = async (clientId, requestId) => {
     const result = await getRequests(clientId)
@@ -115,7 +135,6 @@ function NewRequest() {
             features: {
               perishable: parsedData.perishable || false,
               fragile: parsedData.fragile || false,
-              insurance_included: parsedData.insurance_included || false,
             },
             goods_value: parsedData.goods_value || "",
             additional_observations: parsedData.additional_observations || "",
@@ -131,9 +150,17 @@ function NewRequest() {
                   ""
                 ) || "",
           },
-          invoice_document: parsedData.invoice_document || "",
-          invoice_document_name: parsedData.invoice_document_name || "",
-          estimated_shipping_cost: parsedData.estimated_shipping_cost || "",
+          invoice_document: !isItReallyRepeating
+            ? parsedData.invoice_document
+            : "",
+          invoice_document_name: !isItReallyRepeating
+            ? parsedData.invoice_document_name
+            : "",
+          insurance_document: parsedData.insurance_document || null,
+          insurance_document_name: parsedData.insurance_document_name || "",
+          estimated_shipping_cost: isItReallyRepeating
+            ? ""
+            : parsedData.estimated_shipping_cost || "",
           distance: parsedData.distance || "",
         })
       }
@@ -141,6 +168,12 @@ function NewRequest() {
 
     loadData()
   }, [])
+
+  useEffect(() => {
+    if (isEditing && formData.insurance_document_name) {
+      setInsurance(true)
+    }
+  }, [formData.insurance_document_name])
 
   const handleChange = ({ target }) => {
     const { name, value, type, checked } = target
@@ -161,6 +194,40 @@ function NewRequest() {
     })
   }
 
+  const handleSaveInsurance = async () => {
+    try {
+      if (
+        !formData.insurance_document ||
+        !(formData.insurance_document instanceof File)
+      ) {
+        console.error("Nenhum arquivo de seguro válido encontrado")
+        return null
+      }
+
+      const nowDate = Date.now()
+      const fileName = `${normalizeFileName(
+        formData.insurance_document_name
+      )}-${nowDate}.pdf`
+
+      const { error } = await supabase.storage
+        .from("notas-fiscais-seguros")
+        .upload(`pdfs/${fileName}`, formData.insurance_document)
+
+      if (error) throw error
+
+      const {
+        data: { publicUrl },
+      } = supabase.storage
+        .from("notas-fiscais-seguros")
+        .getPublicUrl(`pdfs/${fileName}`)
+
+      return publicUrl
+    } catch (err) {
+      console.error("Erro ao salvar seguro:", err)
+      return null
+    }
+  }
+
   const handleCalculateFreight = async () => {
     try {
       const numAxles = Number(formData.load_description.numAxles) || 2
@@ -171,8 +238,8 @@ function NewRequest() {
         distance: String(calculate.distance),
       }))
       setIsAllRight(true)
-      return true
       setMsg("")
+      return true
     } catch (error) {
       setLoading(false)
       console.error("Erro ao calcular o frete:", error.message)
@@ -199,18 +266,72 @@ function NewRequest() {
       return
     }
 
+    if (insurance) {
+      if (!formData.insurance_document_name) {
+        setMsg("Você precisa adicionar o arquivo PDF do seguro.")
+        setIsAllRight(false)
+        setLoading(false)
+        return
+      }
+    } else {
+      if (!understandTerms) {
+        setMsg("É necessário marcar que você entendeu os Termos de Seguro!")
+        setIsAllRight(false)
+        setLoading(false)
+        return
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        insurance_document: "",
+        insurance_document_name: "",
+      }))
+    }
+
     handleCalculateFreight()
   }
 
-  const handleEditForm = async () => {
+  const thisTimeItWill = async () => {
     try {
-      const response = await editRequestService(formData)
+      setLoading(true)
+
+      function isValidURL(str) {
+        try {
+          new URL(str)
+          return true
+        } catch (_) {
+          return false
+        }
+      }
+
+      const isInsuranceURL = isValidURL(formData.insurance_document)
+
+      let insuranceUrl = formData.insurance_document
+
+      if (!isInsuranceURL && insurance) {
+        insuranceUrl = await handleSaveInsurance()
+        if (!insuranceUrl) {
+          setMsg("Falha ao enviar o arquivo de seguro.")
+          setModal([true, false])
+          setTimeout(() => setModal([false, false]), 3000)
+          return
+        }
+      }
+
+      const requestData = {
+        ...formData,
+        insurance_document: insurance ? insuranceUrl : "",
+        insurance_document_name:
+          insurance && insuranceUrl ? formData.insurance_document_name : "",
+      }
+
+      const response = isEditing
+        ? await editRequestService(requestData)
+        : await newRequestService(requestData)
 
       if (!response) {
         setModal([true, false])
-        setTimeout(() => {
-          setModal([false, false])
-        }, 3000)
+        setTimeout(() => setModal([false, false]), 3000)
         return
       }
 
@@ -218,41 +339,36 @@ function NewRequest() {
       setTimeout(() => {
         setModal([false, true])
         localStorage.setItem("currentSection", "your-requests")
+        localStorage.removeItem("editingNow")
         location.reload()
       }, 3000)
     } catch (error) {
-      setModal([true, false])
-      console.error("Erro ao editar:", error.message)
+      setTimeout(() => {
+        setModal([true, false])
+      }, 3000)
+      console.error("Erro ao enviar:", error.message)
     } finally {
       setLoading(false)
     }
   }
 
   const handleSendForm = async () => {
-    try {
-      const response = await newRequestService(formData)
-
-      if (!response) {
-        setModal([true, false])
-        setTimeout(() => {
-          setModal([false, false])
-        }, 3000)
-        return
-      }
-
-      setModal([true, true])
-      setTimeout(() => {
-        setModal([false, true])
-        localStorage.setItem("currentSection", "your-requests")
-        location.reload()
-      }, 3000)
-    } catch (error) {
-      setModal([true, false])
-      console.error("Erro ao enviar:", error.message)
-    } finally {
-      setLoading(false)
-    }
+    setPhase(1)
   }
+
+  useEffect(() => {
+    if (phase === 1) {
+      setModalConfirm(true)
+    }
+    if (phase === 2) {
+      setModalConfirm(false)
+      setModalConfirmPayment(true)
+    }
+    if (phase === 3) {
+      setModalConfirmPayment(false)
+      thisTimeItWill()
+    }
+  }, [phase])
 
   return (
     <div id="new-request">
@@ -334,14 +450,14 @@ function NewRequest() {
               name="location.destination.cep"
               value={formData.location.destination.cep}
               onChange={handleChange}
-              label={"CEP (do destino)"}
+              label={"CEP"}
               type="cep"
             />
             <Input
               name="location.destination.city"
               value={formData.location.destination.city}
               onChange={handleChange}
-              label={"Cidade (do destino)"}
+              label={"Cidade"}
               type="text"
             />
             <Input
@@ -384,7 +500,7 @@ function NewRequest() {
               name="location.destination.complete_address"
               value={formData.location.destination.complete_address}
               onChange={handleChange}
-              label={"Endereço Completo (do destino)"}
+              label={"Endereço Completo"}
               type="text"
             />
           </section>
@@ -395,7 +511,6 @@ function NewRequest() {
             <img src={blueBoxIcon} alt="blue box icon" />
             Descrição da Carga
           </h3>
-
           <div id="two-sides">
             <div id="left-side">
               <Input
@@ -479,16 +594,6 @@ function NewRequest() {
                     label={"Frágil"}
                     desc="Que quebra fácil, delicado."
                   />
-                  <Input
-                    name="load_description.features.insurance_included"
-                    value={
-                      formData.load_description.features.insurance_included
-                    }
-                    onChange={handleChange}
-                    type="checkbox"
-                    label={"Seguros Inclusos"}
-                    desc="O proprietário já tem a garantia de que estará protegido desde o momento da aquisição."
-                  />
                 </div>
               </div>
             </div>
@@ -544,6 +649,7 @@ function NewRequest() {
             <FileUploader
               name="invoice_document"
               onChange={({ xmlString, fileName }) => {
+                setIsAllRight(false)
                 setFormData((prev) => ({
                   ...prev,
                   invoice_document: xmlString,
@@ -552,9 +658,95 @@ function NewRequest() {
               }}
               value={formData.invoice_document}
               docName={formData.invoice_document_name}
+              fileType={"xml"}
             />
           </section>
         </div>
+
+        <section id="insurance-sec">
+          <h3>
+            <img src={insuranceIcon} alt="insuranceIcon" />
+            Adiconar Seguro
+          </h3>
+
+          <p>Você quer adicionar um seguro?</p>
+          <div id="decision">
+            <label htmlFor="yes">
+              <input
+                type="radio"
+                name="choose"
+                required
+                checked={isEditing ? (insurance ? true : false) : null}
+                id="yes"
+                onChange={() => {
+                  setIsAllRight(false)
+                  setUnderstandTerms(false)
+                  setFormData((prev) => ({
+                    ...prev,
+                    insurance_document: null,
+                    insurance_document_name: "",
+                  }))
+                  setInsurance(true)
+                }}
+              />
+              SIM
+            </label>
+            <label htmlFor="no">
+              <input
+                type="radio"
+                name="choose"
+                checked={isEditing ? (!insurance ? true : false) : null}
+                required
+                id="no"
+                onChange={() => {
+                  setIsAllRight(false)
+                  setUnderstandTerms(false)
+                  setFormData((prev) => ({
+                    ...prev,
+                    insurance_document: null,
+                    insurance_document_name: "",
+                  }))
+                  setInsurance(false)
+                }}
+              />
+              NÃO
+            </label>
+          </div>
+
+          {insurance ? (
+            <FileUploader
+              name="insurance_document"
+              onChange={({ pdfFile, fileName }) => {
+                setIsAllRight(false)
+                setFormData((prev) => ({
+                  ...prev,
+                  insurance_document: pdfFile,
+                  insurance_document_name: fileName,
+                }))
+              }}
+              value={formData.insurance_document}
+              docName={formData.insurance_document_name}
+              fileType={"pdf"}
+            />
+          ) : isEditing || insurance === false ? (
+            <Input
+              name="understandTerms"
+              isRequired={true}
+              value={understandTerms}
+              onChange={() => {
+                setIsAllRight(false)
+                setUnderstandTerms(!understandTerms)
+              }}
+              type="checkbox"
+              label={
+                "Estou ciente de que o TemCarga não oferece seguro e assumo total responsabilidade por eventuais perdas, danos, roubo ou extravios durante o transporte. Autorizo o transporte sem cobertura adicional."
+              }
+              desc="O proprietário já tem a garantia de que estará protegido desde o momento da aquisição."
+            />
+          ) : (
+            <></>
+          )}
+        </section>
 
         <section id="estimated-value">
           <div>
@@ -582,16 +774,7 @@ function NewRequest() {
             {msg && <p id="form-error">{msg}</p>}
             {isAllRight && (
               <div id="last-button">
-                <button
-                  id="confirm-form"
-                  onClick={
-                    isEditing
-                      ? handleEditForm
-                      : isRepiting
-                      ? handleSendForm
-                      : handleSendForm
-                  }
-                >
+                <button id="confirm-form" onClick={handleSendForm}>
                   <img
                     src={
                       isEditing
@@ -618,12 +801,12 @@ function NewRequest() {
           <div id="modal-container">
             <img src={SucessIcon} alt="" />
 
-            <p>Solicitação feita com sucesso</p>
+            <p>{isEditing ? "Alteração" : "Solicitação"} feita com sucesso</p>
           </div>
         </div>
       ) : modal[0] && modal[1] === false ? (
         <div id="modal">
-          <img src={FailIcon} alt="" />
+          <img src={FailIcon} alt="fail" />
 
           <p>Erro ao fazer a solicitação</p>
         </div>
@@ -632,6 +815,34 @@ function NewRequest() {
       )}
 
       {loading && <Loading />}
+      {modalConfirm && (
+        <ModalConfirm
+          title={"Deseja proceguir com a solicitação?"}
+          desc={
+            "Lembrando que quando o caminhoneiro começar o serviço, não será mais possível cancelar!"
+          }
+          continueRequest={(res) => {
+            if (
+              formData.estimated_shipping_cost ===
+              JSON.parse(localStorage?.getItem("editingNow"))
+                ?.estimated_shipping_cost
+            ) {
+              setPhase(3)
+              setModalConfirm(false)
+            } else if (res) {
+              setPhase(2)
+            }
+          }}
+          close={(res) => !res && setPhase(0)}
+        />
+      )}
+      {modalConfirmPayment && (
+        <ModalConfirmPayment
+          amount={formData.estimated_shipping_cost}
+          continuePayment={(res) => res && setPhase(3)}
+          cancel={(res) => !res && setPhase(0)}
+        />
+      )}
     </div>
   )
 }

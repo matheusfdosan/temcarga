@@ -90,7 +90,16 @@ function Home() {
         <div className="card" id="system-messages">
           <div className="main-info">
             <h3>Mensagens do Sistema</h3>
-            <span>{0}</span>
+            <span>
+              {
+                requests.filter(
+                  (req) =>
+                    req.status === "in-progress" ||
+                    req.status === "completed" ||
+                    req.status === "canceled"
+                ).length
+              }
+            </span>
           </div>
           <img src={systemMessages} alt="system-messages" />
         </div>

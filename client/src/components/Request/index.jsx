@@ -5,6 +5,7 @@ import pendingIcon from "../../assets/StatusIcons/pending-icon.svg"
 import inProgressIcon from "../../assets/StatusIcons/in-progress-icon.svg"
 import completedIcon from "../../assets/StatusIcons/completed-icon.svg"
 import canceledIcon from "../../assets/StatusIcons/canceled-icon.svg"
+import acceptedIcon from "../../assets/StatusIcons/accepted-icon.svg"
 
 import arrowRight from "../../assets/arrow-right-icon.svg"
 import originIcon from "../../assets/origin-icon.svg"
@@ -52,6 +53,14 @@ function Request({ id, status, local, type, value }) {
         ) : status === "completed" ? (
           <span className="status completed">
             <img src={completedIcon} alt="completed-icon" /> Concluído
+          </span>
+        ) : status === "accepted" ? (
+          <span className="status accepted">
+            <img src={acceptedIcon} alt="accepted-icon" /> Aceito
+          </span>
+        ) : status === "waiting" ? (
+          <span className="status pending">
+            <img src={pendingIcon} alt="pending-icon" /> Pendente
           </span>
         ) : status === "canceled" ? (
           <span className="status canceled">
@@ -130,7 +139,7 @@ function Request({ id, status, local, type, value }) {
         <button onClick={handleSeeDetails}>Ver Detalhes</button>
 
         <button onClick={handleRepeatRequest}>
-          <img src={loopIcon} alt="loop-icon"  />
+          <img src={loopIcon} alt="loop-icon" />
           Repetir Solicitação
         </button>
       </div>

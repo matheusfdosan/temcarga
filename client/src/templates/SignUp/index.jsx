@@ -7,6 +7,7 @@ import LogoWhite from "../../assets/LogoWhite.svg"
 import { useState } from "react"
 import signUpService from "../../utils/signUpService"
 import loginService from "../../utils/loginService"
+import Contract from "../../components/Contract"
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -17,24 +18,26 @@ function SignUp() {
     confirmPassword: "",
   })
   const [msg, setMsg] = useState("")
+  const [showContractModal, setShowContractModal] = useState("")
 
   const handleChange = ({ target }) => {
     const { name, value } = target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
+  const handleCloseModal = (close) => {
+    setShowContractModal(close)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // Verifica se todos os input estão preenchidos
     const isAllFilled = Object.values(formData).every(
       (val) => val !== null && val !== undefined && String(val).trim() !== ""
     )
 
-    // Verifica se todas as senhas estão iguais
     const isPasswordsSame = formData.password === formData.confirmPassword
 
-    // Verifica se a senha tem mais de 8 dígitos
     const isPasswordgreaterThanEigth = formData.password.length >= 8
 
     if (!isAllFilled) {
@@ -51,9 +54,14 @@ function SignUp() {
       setMsg("Crie uma senha com mais de 8 dígitos!")
       return
     }
-
     setMsg("")
-    await doSignUp(formData)
+    setShowContractModal(true)
+  }
+
+  const handleSigned = async (response) => {
+    if (response) {
+      await doSignUp(formData)
+    }
   }
 
   const doLogin = async (userLogin) => {
@@ -163,6 +171,10 @@ function SignUp() {
           }}
         />
       </div>
+
+      {showContractModal && (
+        <Contract wasItSigned={handleSigned} closeModal={handleCloseModal} />
+      )}
     </div>
   )
 }
