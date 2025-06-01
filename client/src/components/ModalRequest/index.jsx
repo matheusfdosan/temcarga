@@ -9,6 +9,7 @@ import L from "leaflet"
 import truckIcon from "../../assets/HowItWorksIcons/step2-icon.svg"
 import mapIcon from "../../assets/HowItWorksIcons/step5-icon.svg"
 import blueBoxIcon from "../../assets/blue-box-icon.svg"
+import whitePaymentIcon from "../../assets/StatusIcons/white-paymentIcon-icon.svg"
 import crossIcon from "../../assets/cross-icon.svg"
 import dateIcon from "../../assets/date-icon.svg"
 import editIcon from "../../assets/edit-icon.svg"
@@ -22,10 +23,11 @@ import statusIcon from "../../assets/status-icon.svg"
 import whiteEyeIcon from "../../assets/white-eye-icon.svg"
 import taxDocsIcon from "../../assets/tax-docs-icon.svg"
 
-import getDriver from "../../utils/getDriver.js"
+import getCoordinates from "../../utils/getCoordinates.js"
 import getOneRequest from "../../utils/getOneRequest.js"
 import cancelRequest from "../../utils/cancelRequest.js"
 import deleteRequestService from "../../utils/deleteRequest.js"
+import releasePaymentService from "../../utils/releasePayment.js"
 
 const truckMarkerIcon = L.icon({
   iconUrl: betterBlueMarker,
@@ -77,9 +79,10 @@ function ModalRequest({ closeModal, id }) {
     if (request.driver_id) {
       const fetchDriver = async () => {
         try {
-          const result = await getDriver(request.driver_id, {
+          const result = await getCoordinates(request.driver_id, {
             signal: abortController.signal,
           })
+          console.log(result)
           setDriverLocation({ lat: result.lat, long: result.lng })
         } catch (err) {
           if (err.name !== "AbortError") {
@@ -89,7 +92,8 @@ function ModalRequest({ closeModal, id }) {
       }
 
       fetchDriver()
-      interval = setInterval(fetchDriver, 30 * 1000) // Changed to 30 seconds
+      // interval = setInterval(fetchDriver, 30 * 1000)
+      interval = setInterval(fetchDriver, 5 * 1000)
     }
 
     return () => {
@@ -149,6 +153,17 @@ function ModalRequest({ closeModal, id }) {
       setActive("home")
     } catch (err) {
       console.error("Error canceling request:", err)
+    }
+  }
+
+  const handlePayment = async (id) => {
+    try {
+      await releasePaymentService(id)
+      closeModal(false)
+      setActive("home")
+      window.location.reload()
+    } catch (err) {
+      console.error("Error handle payment request:", err)
     }
   }
 
@@ -339,39 +354,40 @@ function ModalRequest({ closeModal, id }) {
           )}
         </section>
 
-        {request.driver_id &&
-          (request.status === "in-progress" ||
-            request.status === "accepted") && (
-            <section id="driver-sec">
-              <h3>
-                <img src={mapIcon} alt="Driver location icon" />
-                Localização do caminhoneiro
-              </h3>
-              {request.status === "accepted" ? (
-                <p>O caminhoneiro está se preparando para o serviço</p>
-              ) : driverLocation.lat && driverLocation.long ? (
-                <MapContainer
-                  center={[driverLocation.lat, driverLocation.long]}
-                  zoom={15}
-                  style={{
-                    height: "40rem",
-                    width: "80%",
-                    margin: "2rem auto",
-                    border: ".2rem solid var(--primary-color)",
-                  }}
-                >
-                  <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
-                  <FollowDriver position={driverLocation} />
-                  <Marker
-                    position={[driverLocation.lat, driverLocation.long]}
-                    icon={truckMarkerIcon}
-                  />
-                </MapContainer>
-              ) : (
-                <p>Carregando localização do caminhoneiro...</p>
-              )}
-            </section>
-          )}
+        {(request.status === "in-progress" ||
+          request.status === "accepted") && (
+          <section id="driver-sec">
+            <h3>
+              <img src={mapIcon} alt="Driver location icon" />
+              Localização do caminhoneiro
+            </h3>
+            {request.status === "accepted" ? (
+              <p>O caminhoneiro está se preparando para o serviço</p>
+            ) : request.status === "in-progress" &&
+              driverLocation.lat &&
+              driverLocation.long ? (
+              <MapContainer
+                center={[driverLocation.lat, driverLocation.long]}
+                zoom={15}
+                style={{
+                  height: "40rem",
+                  width: "80%",
+                  margin: "2rem auto",
+                  border: ".2rem solid var(--primary-color)",
+                }}
+              >
+                <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
+                <FollowDriver position={driverLocation} />
+                <Marker
+                  position={[driverLocation.lat, driverLocation.long]}
+                  icon={truckMarkerIcon}
+                />
+              </MapContainer>
+            ) : (
+              <p>Carregando localização do caminhoneiro...</p>
+            )}
+          </section>
+        )}
 
         <section id="status">
           <h3>
@@ -388,8 +404,10 @@ function ModalRequest({ closeModal, id }) {
                   ? "Em Andamento"
                   : request.status === "accepted"
                   ? "Aceito"
-                  : request.status === "waiting"
-                  ? "Aguardando"
+                  : request.status === "negotiating"
+                  ? "Em Negociação"
+                  : request.status === "payment"
+                  ? "Esperando o Pagamento"
                   : request.status === "completed"
                   ? "Concluído"
                   : request.status === "canceled"
@@ -421,8 +439,18 @@ function ModalRequest({ closeModal, id }) {
               Editar Solicitação
             </button>
           )}
+          {request.status === "payment" && (
+            <button id="payment-btn" onClick={() => setConfirmCancel(true)}>
+              <img src={whitePaymentIcon} alt="confirm request icon" />
+              Liberar Pagamento
+            </button>
+          )}
+
           {request.status !== "completed" &&
             request.status !== "canceled" &&
+            request.status !== "accepted" &&
+            request.status !== "payment" &&
+            request.status !== "negotiating" &&
             request.status !== "in-progress" && (
               <button id="cancel-btn" onClick={() => setConfirmCancel(true)}>
                 <img src={whiteCrossIcon} alt="Delete request icon" />
@@ -430,9 +458,10 @@ function ModalRequest({ closeModal, id }) {
               </button>
             )}
           {request.status !== "completed" &&
+            request.status !== "payment" &&
             request.status !== "canceled" &&
-            request.status !== "pending" &&
-            request.status !== "waiting" && (
+            request.status !== "in-progress" &&
+            request.status !== "pending" && (
               <button id="cancel-btn" onClick={() => setConfirmCancel(true)}>
                 <img src={whiteCrossIcon} alt="Cancel request icon" />
                 Cancelar Solicitação
@@ -445,18 +474,24 @@ function ModalRequest({ closeModal, id }) {
           close={(res) => !res && setConfirmCancel(false)}
           continueRequest={(res) =>
             res &&
-            (request.status === "pending" || request.status === "waiting")
+            (request.status === "pending" || request.status === "negotiating")
               ? handleDeleteRequest()
+              : request.status === "payment"
+              ? handlePayment(request.id)
               : handleCancelRequest(request.id)
           }
           title={
-            request.status === "pending" || request.status === "waiting"
+            request.status === "pending" || request.status === "negotiating"
               ? "Tem certeza que deseja apagar a solicitação?"
+              : request.status === "payment"
+              ? "Sua carga já chegou?"
               : "Tem certeza que deseja cancelar a solicitação?"
           }
           desc={
-            request.status === "pending" || request.status === "waiting"
-              ? ""
+            request.status === "pending" || request.status === "negotiating"
+              ? "Você está cancelando um frete que já foi aceito por um caminhoneiro"
+              : request.status === "payment"
+              ? "Confirme o seu pedido e librere o pagamento do caminhoneiro!"
               : "Ao cancelar, será cobrada uma taxa correspondente a 4% do valor."
           }
         />

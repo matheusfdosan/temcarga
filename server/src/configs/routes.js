@@ -10,6 +10,8 @@ const userDocuments = require("../routes/getDocuments.js")
 const editRequest = require("../routes/editRequest.js")
 const cancelRequest = require("../routes/cancelRequest.js")
 const deleteRequest = require("../routes/deleteRequest.js")
+const realesePayment = require("../routes/realesePayment.js")
+const getDriver = require("../routes/gerDriver.js")
 
 async function allRoutes(server) {
   server.register(login)
@@ -22,6 +24,8 @@ async function allRoutes(server) {
   server.register(editRequest)
   server.register(cancelRequest)
   server.register(deleteRequest)
+  server.register(realesePayment)
+  server.register(getDriver)
 }
 
 module.exports = fastifyPlugin(allRoutes)

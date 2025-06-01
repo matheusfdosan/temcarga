@@ -7,6 +7,7 @@ const PGDATABASE = process.env.PGDATABASE
 const PGUSER = process.env.PGUSER
 const PGPASSWORD = process.env.PGPASSWORD
 const JWT_SECRET = process.env.JWT_SECRET
+const MONGODB_URI = process.env.MONGODB_URI
 const PORT = process.env.PORT
 
 module.exports = {
@@ -16,4 +17,5 @@ module.exports = {
   PGDATABASE,
   PGUSER,
   PGPASSWORD,
+  MONGODB_URI,
 }

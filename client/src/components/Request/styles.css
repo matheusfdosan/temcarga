@@ -44,6 +44,16 @@
   background-color: #ffe761cd;
 }
 
+.request-card > .container > .status.payment {
+  color: #00875e;
+  background-color: #89ffdc;
+}
+
+.request-card > .container > .status.negotiating {
+  color: #a8179a;
+  background-color: #ff92f4;
+}
+
 .request-card > .container > .status.canceled {
   background-color: #ff616138;
   color: #ef4444;

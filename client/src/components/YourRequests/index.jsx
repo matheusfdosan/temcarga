@@ -73,6 +73,8 @@ function YourRequests() {
               <option value="accepted">Aceitos</option>
               <option value="in-progress">Em Andamento</option>
               <option value="pending">Pendente</option>
+              <option value="negotiating">Em Negociação</option>
+              <option value="payment">Esperando Pagamento</option>
               <option value="completed">Concluída</option>
               <option value="canceled">Cancelada</option>
             </select>
@@ -111,6 +113,7 @@ function YourRequests() {
               }}
               type={request.type}
               value={request.estimated_shipping_cost}
+              driverId={request.driver_id}
             />
           ))
         ) : (

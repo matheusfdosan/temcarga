@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import "./styles.css"
 
 import pendingIcon from "../../assets/StatusIcons/pending-icon.svg"
@@ -6,6 +6,8 @@ import inProgressIcon from "../../assets/StatusIcons/in-progress-icon.svg"
 import completedIcon from "../../assets/StatusIcons/completed-icon.svg"
 import canceledIcon from "../../assets/StatusIcons/canceled-icon.svg"
 import acceptedIcon from "../../assets/StatusIcons/accepted-icon.svg"
+import negotiatingIcon from "../../assets/StatusIcons/negociating-icon.svg"
+import paymentIcon from "../../assets/StatusIcons/paymentIcon-icon.svg"
 
 import arrowRight from "../../assets/arrow-right-icon.svg"
 import originIcon from "../../assets/origin-icon.svg"
@@ -13,13 +15,16 @@ import destinationIcon from "../../assets/destination-icon.svg"
 import boxIcon from "../../assets/box-icon.svg"
 import loopIcon from "../../assets/loop-icon.svg"
 
+import getDriver from "../../utils/getDriver.js"
 import ModalRequest from "../ModalRequest"
 import { useNavigation } from "../../contexts/NavigationContext"
 
-function Request({ id, status, local, type, value }) {
+function Request({ id, status, local, type, value, driverId }) {
   const { setActive } = useNavigation()
   const [modal, setModal] = useState(false)
-  const [driver, setDriver] = useState([])
+  const [driver, setDriver] = useState({
+    name: "",
+  })
 
   const handleSeeDetails = () => {
     setModal(true)
@@ -29,10 +34,23 @@ function Request({ id, status, local, type, value }) {
     setModal(closeModal)
   }
 
-  const handleGetDriverInfo = async (id) => {
-    // const info = await getDriver(id)
-    setDriver((prev) => ({ ...prev, name: "Markinhos" }))
-  }
+  useEffect(() => {
+    const handleGetDriverInfo = async () => {
+      try {
+        if (driverId) {
+          const info = await getDriver(driverId)
+          console.log(info)
+          setDriver({ name: info.name })
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    if (status !== "pending" && status !== "negotiating" && driverId) {
+      handleGetDriverInfo()
+    }
+  }, [driverId, status])
 
   const handleRepeatRequest = () => {
     localStorage.setItem("repeatRequest", JSON.stringify(id))
@@ -58,9 +76,13 @@ function Request({ id, status, local, type, value }) {
           <span className="status accepted">
             <img src={acceptedIcon} alt="accepted-icon" /> Aceito
           </span>
-        ) : status === "waiting" ? (
-          <span className="status pending">
-            <img src={pendingIcon} alt="pending-icon" /> Pendente
+        ) : status === "negotiating" ? (
+          <span className="status negotiating">
+            <img src={negotiatingIcon} alt="negotiating-icon" /> Em Negociação
+          </span>
+        ) : status === "payment" ? (
+          <span className="status payment">
+            <img src={paymentIcon} alt="payment-icon" /> Esperando Pagamento
           </span>
         ) : status === "canceled" ? (
           <span className="status canceled">
@@ -114,16 +136,16 @@ function Request({ id, status, local, type, value }) {
           </div>
         </div>
 
-        {status !== "pending" && driver !== null ? (
+        {status !== "pending" && status !== "negotiating" && driver !== null ? (
           <>
             <div id="line"></div>
-            <div id="driver" onLoad={handleGetDriverInfo}>
+            <div id="driver">
               <img
                 src={"https://cdn-icons-png.flaticon.com/512/1535/1535791.png"}
                 alt={driver.name}
               />
               <div>
-                <p>{driver.name}</p>
+                <p>{driver.name || "N/A"}</p>
                 <span>Motorista</span>
               </div>
             </div>

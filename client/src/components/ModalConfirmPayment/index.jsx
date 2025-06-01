@@ -10,7 +10,7 @@ function ModalConfirmPayment({ amount, pixCode = "00020126580014BR.GOV.BCB.PIX01
   useEffect(() => {
     setTimeout(() => {
       continuePayment(true)
-    }, 5000);
+    }, 10000);
   }, []);
 
   return (

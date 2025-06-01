@@ -1,9 +1,9 @@
 import axios from "axios"
 
-const getDriver = async (requestId) => {
+const getCoordinates = async (requestId) => {
   try {
-    const response = await axios.get(`http://localhost:3000/driver/${requestId}`)
-    return response?.data?.driver
+    const response = await axios.get(`http://localhost:3001/coordinates`)
+    return response?.data
   } catch (error) {
     console.error(
       "Erro ao buscar as coordernadas: ",
@@ -14,4 +14,4 @@ const getDriver = async (requestId) => {
   }
 }
 
-export default getDriver
+export default getCoordinates
